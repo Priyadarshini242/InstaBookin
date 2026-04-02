@@ -6,7 +6,7 @@ import Logo from '../../assets/logo1.png'
 const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/services', label: 'Services' },
-  { to: '/doctors', label: 'Doctors' },
+  { to: '/doctors', label: 'Nurses' },
   { to: '/about', label: 'About Us' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -32,7 +32,7 @@ export default function Navbar() {
         }`}
     >
       {/* Top bar */}
-      <div className="bg-[#2b314f] text-white font-bold text-xs py-1.5 px-4 text-center hidden md:block">
+      <div className="bg-orange-500 text-white font-bold text-xs py-1.5 px-4 text-center hidden md:block">
         <span>📞 Call us: </span>
         <a href="tel:+918000000000" className="font-semibold hover:underline">+91 80000 00000</a>
         <span className="mx-4">|</span>
@@ -40,48 +40,51 @@ export default function Navbar() {
       </div>
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
             <img
               src={Logo}
               alt="Instabookin Health Logo"
-              className="h-12 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
-
-
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-3 h-full">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lg text-2xl font-medium transition-all duration-150 ${isActive
-                    ? 'bg-primary-50 text-[#2b314f]'
-                    : 'text-slate-600 hover:text-primary-700 hover:bg-primary-50'
+                  `group px-4 py-2 flex items-center rounded-lg text-base font-medium leading-none relative transition-all duration-150 ${isActive
+                    ? 'text-[#2b314f]'
+                    : 'text-slate-800 hover:text-[#2b314f]'
                   }`
                 }
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300"></span>
               </NavLink>
             ))}
           </div>
 
           {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-5 h-full">
             <a
               href="tel:+918000000000"
-              className="flex items-center gap-1.5 text-[#2b314f] text-sm font-medium hover:text-primary-800"
-            >
-              <Phone size={14} />
+              className="flex items-center gap-2 text-slate-600 text-sm font-medium hover:text-orange-500 transition-colors"            >
+              <Phone size={16} />
               +91 80000 00000
             </a>
-            <Link to="/book" className="btn-primary text-sm">
-              Book a Visit
+            <Link to="/book"
+              className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 shadow-sm hover:shadow-lg hover:-translate-y-[1px] transition-all duration-300 overflow-hidden">
+              <span className="relative z-10 flex items-center gap-2">
+                Book a Visit
+              </span>
+
+              <span className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition-opacity duration-300"></span>
             </Link>
           </div>
 

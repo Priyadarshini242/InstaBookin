@@ -1,3 +1,4 @@
+//Home page preview
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { services } from '../../data'
