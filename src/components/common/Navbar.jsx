@@ -28,16 +28,18 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white/95 backdrop-blur-sm py-3'
-        }`}
-    >
-      {/* Top bar */}
-      <div className="bg-orange-500 text-white font-bold text-xs py-1.5 px-4 text-center hidden md:block">
-        <span>📞 Call us: </span>
-        <a href="tel:+918000000000" className="font-semibold hover:underline">+91 80000 00000</a>
-        <span className="mx-4">|</span>
-        <span>🕐 Available 24/7 – Book a home visit in minutes!</span>
-      </div>
+  className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    scrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
+  }`}
+>
+  {/* Top bar - hide when scrolled */}
+<div className="bg-orange-500 text-white font-bold text-xs py-1.5 px-4 text-center hidden md:block">
+    <span>📞 Call us: </span>
+    <a href="tel:+918000000000" className="font-semibold hover:underline">+91 80000 00000</a>
+    <span className="mx-4">|</span>
+    <span>🕐 Available 24/7 – Book a home visit in minutes!</span>
+  </div>
+  {/* rest of navbar... */}
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[72px]">

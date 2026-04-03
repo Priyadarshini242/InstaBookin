@@ -1,17 +1,30 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
+ 
   body {
     font-family: 'DM Sans', system-ui, sans-serif;
     color: #1e293b;
     background-color: #ffffff;
     -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
   }
+}
+#root {
+  margin: 0;
+  padding: 0;
 }
 
 @layer components {
