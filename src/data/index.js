@@ -2,7 +2,7 @@
 export const services = [
   {
     id: 1,
-    title: 'Physiotherapy',
+    title: '24 Hours Home Nursing Services',
     slug: 'physiotherapy',
     icon: '🦴',
     description: 'Expert physiotherapists visit your home for rehabilitation, pain management, and mobility improvement.',
@@ -14,7 +14,7 @@ export const services = [
   },
   {
     id: 2,
-    title: 'Nursing Care',
+    title: 'Nurse Bureaus',
     slug: 'nursing',
     icon: '💉',
     description: 'Trained nurses for wound dressing, injections, IV drips, catheter care, and post-operative support.',
@@ -26,7 +26,7 @@ export const services = [
   },
   {
     id: 3,
-    title: 'Doctor Consultation',
+    title: 'Nursing Services',
     slug: 'doctor',
     icon: '🩺',
     description: 'MBBS & MD doctors visit your home for diagnosis, prescription, and comprehensive health check-ups.',
@@ -38,7 +38,7 @@ export const services = [
   },
   {
     id: 4,
-    title: 'Lab Tests at Home',
+    title: 'Senior Citizen Care Taker Services',
     slug: 'lab',
     icon: '🧪',
     description: 'Get blood tests, urine analysis, and 200+ diagnostic tests done from the comfort of your home.',
@@ -50,7 +50,7 @@ export const services = [
   },
   {
     id: 5,
-    title: 'Elder Care',
+    title: 'caretaking At Home',
     slug: 'elder-care',
     icon: '👴',
     description: 'Compassionate attendants and trained caretakers for elderly patients requiring round-the-clock assistance.',
@@ -62,7 +62,7 @@ export const services = [
   },
   {
     id: 6,
-    title: 'Medical Equipment',
+    title: 'Child Care',
     slug: 'equipment',
     icon: '🏥',
     description: 'Rent or buy hospital-grade medical equipment delivered and installed at your home.',
@@ -71,6 +71,30 @@ export const services = [
     features: ['Hospital beds', 'Wheelchairs', 'Oxygen concentrators', 'BP monitors'],
     color: 'from-red-50 to-rose-50',
     accent: 'bg-red-100 text-red-700',
+  },
+   {
+    id: 5,
+    title: 'Elder Home Care',
+    slug: 'elder-care',
+    icon: '👴',
+    description: 'Compassionate attendants and trained caretakers for elderly patients requiring round-the-clock assistance.',
+    price: '₹599',
+    duration: 'Full day',
+    features: ['Daily assistance', 'Medication reminders', 'Companionship', 'Mobility help'],
+    color: 'from-green-50 to-emerald-50',
+    accent: 'bg-green-100 text-green-700',
+  },
+   {
+    id: 1,
+    title: 'Orthopedic Care',
+    slug: 'physiotherapy',
+    icon: '🦴',
+    description: 'Expert physiotherapists visit your home for rehabilitation, pain management, and mobility improvement.',
+    price: '₹499',
+    duration: '45 min',
+    features: ['Post-surgery rehab', 'Sports injury', 'Back & neck pain', 'Neurological conditions'],
+    color: 'from-teal-50 to-cyan-50',
+    accent: 'bg-teal-100 text-teal-700',
   },
 ]
 

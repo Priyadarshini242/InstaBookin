@@ -10,10 +10,8 @@ const highlights = [
 
 export default function Hero() {
   const services = [
-    'Physiotherapy', 'Nursing Care', 'Medical Equipment', 'Lab Tests',
-    'Elder Care', 'Trained Attendants', 'Covid Care', 'Doctor Consultation',
-    'Vaccination', 'Critical Care', 'Nutrition & Diet Consultation',
-    'Counselling', 'Mother & Baby Care', 'Diabetes Care',
+     '24 Hours Home Nursing Services','Nurse Bureaus','Nursing Services','Senior Citizen Care Taker Services ',
+     'caretaking At Home','Child Care','Elder Home Care','Orthopedic Care',
   ]
   const [selectedService, setSelectedService] = useState(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
