@@ -48,7 +48,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-14 items-center">
             <div>
-              <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-3">Our Mission</p>
+              <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3">Our Mission</div>
               <h2 className="section-title mb-5">
                 Bringing Healthcare Home Since 2018
               </h2>
@@ -61,7 +61,7 @@ export default function AboutPage() {
               <div className="space-y-3">
                 {['NABH Certified Home Healthcare Provider', 'ISO 9001:2015 Quality Management System', 'Ministry of Health Recognized Platform', 'HIPAA Compliant Data Management'].map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-sm text-slate-700">
-                    <CheckCircle size={16} className="text-primary-600 shrink-0" />
+                    <CheckCircle size={16} className="text-orange-500 shrink-0" />
                     {item}
                   </div>
                 ))}
@@ -71,8 +71,8 @@ export default function AboutPage() {
             {/* Stats */}
             <div className="grid grid-cols-2 gap-5">
               {stats.map((stat) => (
-                <div key={stat.label} className="card p-6 text-center bg-gradient-to-br from-primary-50 to-teal-50">
-                  <p className="font-display text-4xl font-bold text-primary-600 mb-1">{stat.value}</p>
+                <div key={stat.label} className="bg-white rounded-2xl p-6 text-center border border-orange-100 hover:border-orange-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <p className="font-display text-4xl font-bold text-orange-500 mb-1">{stat.value}</p>
                   <p className="text-slate-500 font-medium text-sm">{stat.label}</p>
                 </div>
               ))}
@@ -90,9 +90,9 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v) => (
-              <div key={v.title} className="card p-6">
-                <div className="w-12 h-12 rounded-2xl bg-primary-100 flex items-center justify-center mb-4">
-                  <v.icon size={22} className="text-primary-600" />
+              <div key={v.title} className="bg-white rounded-2xl p-6 border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center mb-4 group-hover:bg-orange-500 transition-colors duration-300">
+                  <v.icon size={22} className="text-orange-500 group-hover:text-white transition-colors duration-300" />
                 </div>
                 <h3 className="font-display font-bold text-slate-800 text-lg mb-2">{v.title}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{v.desc}</p>
@@ -111,12 +111,12 @@ export default function AboutPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {teamMembers.map((member) => (
-              <div key={member.name} className="card p-6 text-center">
-                <div className={`w-20 h-20 rounded-full ${member.color} text-white flex items-center justify-center font-bold text-2xl mx-auto mb-4`}>
+              <div key={member.name} className="bg-white rounded-2xl p-6 text-center border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                <div className={`w-20 h-20 rounded-full ${member.color} text-white flex items-center justify-center font-bold text-2xl mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   {member.initials}
                 </div>
                 <h3 className="font-display font-bold text-slate-800 mb-1">{member.name}</h3>
-                <p className="text-primary-600 text-sm font-medium mb-1">{member.role}</p>
+                <p className="text-orange-500 text-sm font-medium mb-1">{member.role}</p>
                 <p className="text-slate-400 text-xs">{member.exp}</p>
               </div>
             ))}

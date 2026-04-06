@@ -1,52 +1,73 @@
 import { Link } from 'react-router-dom'
-import { Star, Clock } from 'lucide-react'
+import { Star, Clock, ArrowRight, BadgeCheck } from 'lucide-react'
 import { doctors } from '../../data'
 
-function DoctorCard({ doctor }) {
+function DoctorCard({ doctor, index }) {
   return (
-    <div className="card p-5 flex flex-col gap-4">
-      {/* Avatar */}
+    <div
+      className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-4 overflow-hidden"
+    >
+      {/* Orange top accent bar */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 to-orange-600 w-0 group-hover:w-full transition-all duration-500" />
+
+      {/* Avatar + info */}
       <div className="flex items-start gap-4">
-        <div className={`w-14 h-14 rounded-2xl ${doctor.color} text-white flex items-center justify-center font-bold text-lg shrink-0`}>
+        <div className={`w-14 h-14 rounded-2xl ${doctor.color} text-white flex items-center justify-center font-bold text-lg shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
           {doctor.initials}
         </div>
         <div className="min-w-0">
-          <h3 className="font-semibold text-slate-800 truncate">{doctor.name}</h3>
-          <p className="text-primary-600 text-sm font-medium">{doctor.specialty}</p>
+          <div className="flex items-center gap-1.5">
+            <h3 className="font-bold text-slate-800 truncate group-hover:text-orange-600 transition-colors duration-300">
+              {doctor.name}
+            </h3>
+            <BadgeCheck size={15} className="text-orange-500 shrink-0" />
+          </div>
+          <p className="text-orange-500 text-sm font-semibold">{doctor.specialty}</p>
           <p className="text-slate-400 text-xs">{doctor.qualification}</p>
         </div>
       </div>
 
       {/* Info pills */}
       <div className="flex flex-wrap gap-2">
-        <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">
+        <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-medium">
           {doctor.experience} exp
         </span>
-        <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${
+        <span className={`text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1 ${
           doctor.availability.includes('Today')
             ? 'bg-green-100 text-green-700'
             : 'bg-amber-100 text-amber-700'
         }`}>
-          <Clock size={11} className="inline mr-1" />
+          <Clock size={11} />
           {doctor.availability}
         </span>
       </div>
 
       {/* Rating & fee */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-3 border-t border-b border-slate-100">
         <div className="flex items-center gap-1">
-          <Star size={13} className="text-yellow-500 fill-yellow-500" />
-          <span className="font-semibold text-slate-700 text-sm">{doctor.rating}</span>
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              size={13}
+              className={i < Math.floor(doctor.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200 fill-slate-200'}
+            />
+          ))}
+          <span className="font-semibold text-slate-700 text-sm ml-1">{doctor.rating}</span>
           <span className="text-slate-400 text-xs">({doctor.reviews})</span>
         </div>
         <div className="text-right">
           <span className="text-xs text-slate-400">Fee</span>
-          <p className="font-bold text-primary-700 text-sm">{doctor.consultationFee}</p>
+          <p className="font-extrabold text-orange-500 text-sm">{doctor.consultationFee}</p>
         </div>
       </div>
 
-      <Link to="/book" className="btn-primary text-sm text-center py-2.5">
+      {/* CTA */}
+      <Link
+        to="/book"
+        className="inline-flex items-center justify-center gap-2 w-full text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group-hover:gap-3 mt-auto"
+      >
         Book Appointment
+        <ArrowRight size={14} />
       </Link>
     </div>
   )
@@ -54,24 +75,32 @@ function DoctorCard({ doctor }) {
 
 export default function DoctorsSection() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <p className="text-primary-600 font-semibold text-sm uppercase tracking-wider mb-2">Our Experts</p>
-            <h2 className="section-title">Meet Our Doctors</h2>
+            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3">
+              Our Experts
+            </div>
+            <h2 className="section-title">Meet Our Nurses</h2>
             <p className="section-subtitle">
               200+ verified doctors and specialists available for home visits.
             </p>
           </div>
-          <Link to="/doctors" className="btn-outline text-sm whitespace-nowrap self-start md:self-auto">
-            View All Doctors →
+          <Link
+            to="/doctors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-5 py-2.5 rounded-xl transition-all duration-200 self-start md:self-auto whitespace-nowrap"
+          >
+            View All Nurses <ArrowRight size={14} />
           </Link>
         </div>
 
+        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {doctors.slice(0, 6).map((doctor) => (
-            <DoctorCard key={doctor.id} doctor={doctor} />
+          {doctors.slice(0, 6).map((doctor, index) => (
+            <DoctorCard key={doctor.id} doctor={doctor} index={index} />
           ))}
         </div>
       </div>

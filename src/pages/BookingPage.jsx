@@ -13,19 +13,19 @@ function StepIndicator({ current }) {
           <div className="flex flex-col items-center">
             <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${
               i < current
-                ? 'bg-primary-600 border-primary-600 text-white'
+                ? 'bg-orange-500 border-orange-500 text-white'
                 : i === current
-                ? 'bg-white border-primary-600 text-primary-600'
+                ? 'bg-white border-orange-500 text-orange-500'
                 : 'bg-white border-slate-200 text-slate-400'
             }`}>
               {i < current ? <CheckCircle size={16} /> : i + 1}
             </div>
             <span className={`text-xs mt-1.5 font-medium hidden sm:block ${
-              i === current ? 'text-primary-600' : i < current ? 'text-primary-500' : 'text-slate-400'
+              i === current ? 'text-orange-500' : i < current ? 'text-orange-400' : 'text-slate-400'
             }`}>{step}</span>
           </div>
           {i < STEPS.length - 1 && (
-            <div className={`w-12 sm:w-20 h-0.5 mx-1 mb-4 ${i < current ? 'bg-primary-500' : 'bg-slate-200'}`} />
+            <div className={`w-12 sm:w-20 h-0.5 mx-1 mb-4 ${i < current ? 'bg-orange-400' : 'bg-slate-200'}`} />
           )}
         </div>
       ))}
@@ -61,21 +61,24 @@ export default function BookingPage() {
         <PageHeader title="Book a Home Visit" breadcrumbs={[{ label: 'Book' }]} />
         <section className="py-24 bg-white">
           <div className="max-w-lg mx-auto px-4 text-center">
-            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle size={48} className="text-green-500" />
+            <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <CheckCircle size={48} className="text-orange-500" />
             </div>
             <h2 className="font-display text-3xl font-bold text-slate-800 mb-3">Booking Confirmed!</h2>
-            <p className="text-slate-500 mb-2">Your booking ID is <span className="font-bold text-primary-600">#IH-{Math.floor(Math.random()*100000)}</span></p>
+            <p className="text-slate-500 mb-2">Your booking ID is <span className="font-bold text-orange-500">#IH-{Math.floor(Math.random()*100000)}</span></p>
             <p className="text-slate-500 text-sm mb-8">
               We've sent a confirmation to <strong>{form.email}</strong>. Our team will call you within 30 minutes to confirm the professional's details.
             </p>
-            <div className="card p-5 text-left mb-6 space-y-2 text-sm">
+            <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 text-left mb-6 space-y-2 text-sm">
               <div className="flex justify-between"><span className="text-slate-400">Service</span><span className="font-medium text-slate-700">{form.service}</span></div>
               <div className="flex justify-between"><span className="text-slate-400">Date</span><span className="font-medium text-slate-700">{form.date}</span></div>
               <div className="flex justify-between"><span className="text-slate-400">Time</span><span className="font-medium text-slate-700">{form.time}</span></div>
               <div className="flex justify-between"><span className="text-slate-400">Address</span><span className="font-medium text-slate-700">{form.address}, {form.pincode}</span></div>
             </div>
-            <button onClick={() => { setSubmitted(false); setStep(0); setForm({ service:'',name:'',phone:'',email:'',address:'',pincode:'',date:'',time:'',notes:'' }) }} className="btn-outline text-sm">
+            <button
+              onClick={() => { setSubmitted(false); setStep(0); setForm({ service:'',name:'',phone:'',email:'',address:'',pincode:'',date:'',time:'',notes:'' }) }}
+              className="text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200"
+            >
               Book Another Service
             </button>
           </div>
@@ -92,7 +95,7 @@ export default function BookingPage() {
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <StepIndicator current={step} />
 
-          <div className="card p-8">
+          <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
             {/* Step 0: Service */}
             {step === 0 && (
               <div>
@@ -103,15 +106,15 @@ export default function BookingPage() {
                       key={s.id}
                       className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all ${
                         form.service === s.title
-                          ? 'border-primary-500 bg-primary-50'
-                          : 'border-slate-200 hover:border-primary-300'
+                          ? 'border-orange-500 bg-orange-50'
+                          : 'border-slate-200 hover:border-orange-300'
                       }`}
                     >
                       <input
                         type="radio" name="service" value={s.title}
                         checked={form.service === s.title}
                         onChange={(e) => updateForm('service', e.target.value)}
-                        className="accent-primary-600"
+                        className="accent-orange-500"
                       />
                       <span className="text-xl">{s.icon}</span>
                       <div>
@@ -141,7 +144,7 @@ export default function BookingPage() {
                       <input
                         type={type} placeholder={placeholder} value={form[field]}
                         onChange={(e) => updateForm(field, e.target.value)}
-                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
                       />
                     </div>
                   ))}
@@ -160,7 +163,7 @@ export default function BookingPage() {
                       type="date" value={form.date}
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => updateForm('date', e.target.value)}
-                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
                     />
                   </div>
                   <div>
@@ -173,8 +176,8 @@ export default function BookingPage() {
                           onClick={() => updateForm('time', t)}
                           className={`py-2 rounded-xl text-sm border-2 font-medium transition-all ${
                             form.time === t
-                              ? 'border-primary-500 bg-primary-50 text-primary-700'
-                              : 'border-slate-200 text-slate-600 hover:border-primary-300'
+                              ? 'border-orange-500 bg-orange-50 text-orange-600'
+                              : 'border-slate-200 text-slate-600 hover:border-orange-300'
                           }`}
                         >
                           {t}
@@ -187,7 +190,7 @@ export default function BookingPage() {
                     <textarea
                       rows={3} value={form.notes} onChange={(e) => updateForm('notes', e.target.value)}
                       placeholder="Any specific instructions for the professional..."
-                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50 resize-none"
+                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50 resize-none"
                     />
                   </div>
                 </div>
@@ -214,7 +217,7 @@ export default function BookingPage() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-slate-400 bg-slate-50 p-3 rounded-xl">
+                <p className="text-xs text-slate-400 bg-orange-50 border border-orange-100 p-3 rounded-xl">
                   By confirming, you agree to our Terms of Service and cancellation policy. A confirmation SMS and email will be sent after booking.
                 </p>
               </div>
@@ -232,12 +235,15 @@ export default function BookingPage() {
                 <button
                   onClick={next}
                   disabled={step === 0 && !form.service}
-                  className="btn-primary text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Continue <ArrowRight size={15} />
                 </button>
               ) : (
-                <button onClick={handleSubmit} className="btn-primary text-sm flex items-center gap-2">
+                <button
+                  onClick={handleSubmit}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                >
                   Confirm Booking <CheckCircle size={15} />
                 </button>
               )}

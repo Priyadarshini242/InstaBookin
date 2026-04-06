@@ -36,14 +36,14 @@ export default function ContactPage() {
             <div className="lg:col-span-1 space-y-5">
               <h2 className="font-display text-2xl font-bold text-slate-800 mb-6">Get In Touch</h2>
               {contactInfo.map((item) => (
-                <div key={item.label} className="card p-5 flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-primary-100 flex items-center justify-center shrink-0">
-                    <item.icon size={18} className="text-primary-600" />
+                <div key={item.label} className="bg-white rounded-2xl p-5 flex items-start gap-4 border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+                  <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center shrink-0 group-hover:bg-orange-500 transition-colors duration-300">
+                    <item.icon size={18} className="text-orange-500 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div>
                     <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">{item.label}</p>
                     {item.href ? (
-                      <a href={item.href} className="font-semibold text-slate-800 hover:text-primary-700 transition-colors">
+                      <a href={item.href} className="font-semibold text-slate-800 hover:text-orange-500 transition-colors">
                         {item.value}
                       </a>
                     ) : (
@@ -57,21 +57,18 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <div className="card p-8">
+              <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
                 <h2 className="font-display text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                  <MessageSquare size={22} className="text-primary-600" />
+                  <MessageSquare size={22} className="text-orange-500" />
                   Send Us a Message
                 </h2>
 
                 {submitted ? (
                   <div className="text-center py-12">
-                    <CheckCircle size={56} className="text-green-500 mx-auto mb-4" />
+                    <CheckCircle size={56} className="text-orange-500 mx-auto mb-4" />
                     <h3 className="font-display text-xl font-bold text-slate-800 mb-2">Message Sent!</h3>
                     <p className="text-slate-500">Thank you for reaching out. Our team will get back to you within 2 hours.</p>
-                    <button
-                      onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }) }}
-                      className="btn-outline mt-6 text-sm"
-                    >
+                    <button onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }) }} className="mt-6 text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200">
                       Send Another Message
                     </button>
                   </div>
@@ -83,7 +80,7 @@ export default function ContactPage() {
                         <input
                           type="text" name="name" required value={form.name} onChange={handleChange}
                           placeholder="Your full name"
-                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 border-orange-200 bg-slate-50"
                         />
                       </div>
                       <div>
@@ -91,7 +88,7 @@ export default function ContactPage() {
                         <input
                           type="email" name="email" required value={form.email} onChange={handleChange}
                           placeholder="your@email.com"
-                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 border-orange-200 bg-slate-50"
                         />
                       </div>
                     </div>
@@ -101,14 +98,14 @@ export default function ContactPage() {
                         <input
                           type="tel" name="phone" value={form.phone} onChange={handleChange}
                           placeholder="+91 98765 43210"
-                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 border-orange-200 bg-slate-50"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1.5">Subject *</label>
                         <select
                           name="subject" required value={form.subject} onChange={handleChange}
-                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50"
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 border-orange-200 bg-slate-50"
                         >
                           <option value="">Select a subject</option>
                           <option>Book a Service</option>
@@ -124,10 +121,10 @@ export default function ContactPage() {
                       <textarea
                         name="message" required rows={5} value={form.message} onChange={handleChange}
                         placeholder="How can we help you?"
-                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 bg-slate-50 resize-none"
+                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 border-orange-200 bg-slate-50 resize-none"
                       />
                     </div>
-                    <button type="submit" className="btn-primary w-full py-3 text-sm">
+                    <button type="submit" className="w-full py-3 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl shadow-md hover:shadow-lg hover:-translate-y-[1px] transition-all duration-300">
                       Send Message →
                     </button>
                   </form>
@@ -144,7 +141,7 @@ export default function ContactPage() {
           <h2 className="font-display text-2xl font-bold text-center text-slate-800 mb-8">Common Questions</h2>
           <div className="space-y-4">
             {faqs.slice(0, 3).map((faq, i) => (
-              <div key={i} className="card p-5">
+              <div key={i} className="bg-white rounded-2xl p-5 border border-slate-100 hover:border-orange-200 hover:shadow-md transition-all duration-300">
                 <h3 className="font-semibold text-slate-800 mb-2 text-sm">{faq.q}</h3>
                 <p className="text-slate-500 text-sm leading-relaxed">{faq.a}</p>
               </div>

@@ -6,41 +6,50 @@ import CTABanner from '../components/home/CTABanner'
 
 function ServiceDetailCard({ service }) {
   return (
-    <div className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group`}>
-      
-      {/* Orange top accent bar */}
-      <div className="h-1 bg-gradient-to-r from-orange-400 to-orange-600 w-0 group-hover:w-full transition-all duration-500" />
+    <div className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col will-change-transform`}>
+      <link rel="preload" as="image" href={service.image} />
+      {/* Hover background image */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-cover bg-center"
+        style={{ backgroundImage: `url('${service.image}')` }}
+      />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-[#2b314f]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <div className="p-7">
+      {/* Orange top accent bar */}
+      <div className="h-1 bg-gradient-to-r from-orange-400 to-orange-600 w-0 group-hover:w-full transition-all duration-500 relative z-10" />
+
+      <div className="p-7 relative z-10 flex flex-col flex-1">
+        {/* Icon + duration row */}
         {/* Icon + duration row */}
         <div className="flex items-start justify-between mb-4">
-          <span className="text-4xl">{service.icon}</span>
-          <span className="flex items-center gap-1.5 text-xs font-semibold bg-white/80 text-slate-500 px-2.5 py-1 rounded-full border border-white shadow-sm">
+          <span className="text-4xl group-hover:opacity-0 transition-opacity duration-300">{service.icon}</span>
+          <span className="flex items-center gap-1.5 text-xs font-semibold bg-white/80 group-hover:bg-white/20 group-hover:text-white group-hover:font-bold text-slate-500 px-2.5 py-1 rounded-full border border-white shadow-sm transition-all duration-300">
             <Clock size={11} />
             {service.duration}
           </span>
         </div>
 
-        <h3 className="font-display text-xl font-bold text-slate-800 mb-2 group-hover:text-orange-600 transition-colors duration-200">
+        <h3 className="font-display text-xl font-bold text-slate-800 group-hover:text-white mb-2 transition-colors duration-300">
           {service.title}
         </h3>
-        <p className="text-slate-500 text-sm leading-relaxed mb-5">{service.description}</p>
+        <p className="text-slate-500 group-hover:text-white/80 group-hover:font-medium text-sm leading-relaxed mb-5 transition-colors duration-300">
+          {service.description}
+        </p>
 
-        {/* Features list */}
-        <div className="space-y-2 mb-6">
+        <div className="space-y-2 mb-6 flex-1">
           {service.features.map((f) => (
-            <div key={f} className="flex items-center gap-2.5 text-sm text-slate-700">
-              <CheckCircle size={14} className="text-orange-500 shrink-0" />
+            <div key={f} className="flex items-center gap-2.5 text-sm text-slate-700 group-hover:text-white/90 group-hover:font-semibold transition-colors duration-300">
+              <CheckCircle size={14} className="text-orange-500 group-hover:text-orange-300 shrink-0 transition-colors duration-300" />
               {f}
             </div>
           ))}
         </div>
 
-        {/* Bottom row */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/60">
+        <div className="flex items-center justify-between pt-4 border-t border-white/60 group-hover:border-white/30 mt-auto">
           <div>
-            <p className="text-xs text-slate-400">Starting from</p>
-            <p className="font-extrabold text-orange-500 text-lg">{service.price}</p>
+            <p className="text-xs text-slate-400 group-hover:text-white/60 transition-colors duration-300">Starting from</p>
+            <p className="font-extrabold text-orange-500 group-hover:text-orange-300 text-lg transition-colors duration-300">{service.price}</p>
           </div>
           <Link
             to="/book"
