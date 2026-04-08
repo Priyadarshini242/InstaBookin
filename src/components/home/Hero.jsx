@@ -66,7 +66,7 @@ export default function Hero() {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
   }}
->  <div className="absolute inset-0 bg-[#2b314f]/80" />
+>  <div className="absolute inset-0 bg-[#2b314f]/60" />
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 translate-y-1/2" />

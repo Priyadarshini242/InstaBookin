@@ -1,256 +1,291 @@
-import { useState } from 'react'
-import { CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react'
-import PageHeader from '../components/common/PageHeader'
-import { services } from '../data'
+  import { useState } from 'react'
+  import { CheckCircle, Phone, MapPin, Calendar, Clock, User, Mail, FileText } from 'lucide-react'
+  import PageHeader from '../components/common/PageHeader'
+  import { services } from '../data'
 
-const STEPS = ['Select Service', 'Your Details', 'Schedule', 'Confirm']
+  export default function BookingPage() {
+    const [form, setForm] = useState({
+      service: '',
+      name: '',
+      phone: '',
+      email: '',
+      address: '',
+      pincode: '',
+      date: '',
+      time: '',
+      notes: '',
+    })
+    const [submitted, setSubmitted] = useState(false)
 
-function StepIndicator({ current }) {
-  return (
-    <div className="flex items-center justify-center gap-0 mb-10">
-      {STEPS.map((step, i) => (
-        <div key={step} className="flex items-center">
-          <div className="flex flex-col items-center">
-            <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm border-2 transition-all ${
-              i < current
-                ? 'bg-orange-500 border-orange-500 text-white'
-                : i === current
-                ? 'bg-white border-orange-500 text-orange-500'
-                : 'bg-white border-slate-200 text-slate-400'
-            }`}>
-              {i < current ? <CheckCircle size={16} /> : i + 1}
+    const updateForm = (field, val) => setForm((f) => ({ ...f, [field]: val }))
+
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      setSubmitted(true)
+    }
+
+    const isValid = form.service && form.name && form.phone && form.address && form.pincode && form.date && form.time
+
+    if (submitted) {
+      return (
+        <>
+          <PageHeader title="Book a Home Visit" breadcrumbs={[{ label: 'Book' }]} />
+          <section className="py-24 bg-slate-50">
+            <div className="max-w-lg mx-auto px-4 text-center">
+              <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <CheckCircle size={48} className="text-orange-500" />
+              </div>
+              <h2 className="font-display text-3xl font-bold text-slate-800 mb-3">Booking Confirmed!</h2>
+              <p className="text-slate-500 mb-2">Your booking ID is{' '}
+                <span className="font-bold text-orange-500">#IH-{Math.floor(Math.random() * 100000)}</span>
+              </p>
+              <p className="text-slate-500 text-sm mb-8">
+                Our team will call you within 30 minutes to confirm the professional's details.
+              </p>
+              <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 text-left mb-6 space-y-3 text-sm">
+                {[
+                  { label: 'Service', value: form.service },
+                  { label: 'Name', value: form.name },
+                  { label: 'Date', value: form.date },
+                  { label: 'Time', value: form.time },
+                  { label: 'Address', value: `${form.address}, ${form.pincode}` },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex justify-between border-b border-orange-100 pb-2">
+                    <span className="text-slate-400">{label}</span>
+                    <span className="font-semibold text-slate-700">{value}</span>
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => { setSubmitted(false); setForm({ service:'',name:'',phone:'',email:'',address:'',pincode:'',date:'',time:'',notes:'' }) }}
+                className="text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200"
+              >
+                Book Another Service
+              </button>
             </div>
-            <span className={`text-xs mt-1.5 font-medium hidden sm:block ${
-              i === current ? 'text-orange-500' : i < current ? 'text-orange-400' : 'text-slate-400'
-            }`}>{step}</span>
-          </div>
-          {i < STEPS.length - 1 && (
-            <div className={`w-12 sm:w-20 h-0.5 mx-1 mb-4 ${i < current ? 'bg-orange-400' : 'bg-slate-200'}`} />
-          )}
-        </div>
-      ))}
-    </div>
-  )
-}
+          </section>
+        </>
+      )
+    }
 
-export default function BookingPage() {
-  const [step, setStep] = useState(0)
-  const [form, setForm] = useState({
-    service: '',
-    name: '',
-    phone: '',
-    email: '',
-    address: '',
-    pincode: '',
-    date: '',
-    time: '',
-    notes: '',
-  })
-  const [submitted, setSubmitted] = useState(false)
-
-  const updateForm = (field, val) => setForm((f) => ({ ...f, [field]: val }))
-
-  const next = () => setStep((s) => Math.min(s + 1, STEPS.length - 1))
-  const back = () => setStep((s) => Math.max(s - 1, 0))
-
-  const handleSubmit = () => setSubmitted(true)
-
-  if (submitted) {
     return (
       <>
-        <PageHeader title="Book a Home Visit" breadcrumbs={[{ label: 'Book' }]} />
-        <section className="py-24 bg-white">
-          <div className="max-w-lg mx-auto px-4 text-center">
-            <div className="w-24 h-24 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <CheckCircle size={48} className="text-orange-500" />
+        <PageHeader
+          title="Book a Home Visit"
+          subtitle="Fill in your details below and we'll have a professional at your door."
+          breadcrumbs={[{ label: 'Book' }]}
+        />
+
+        <section className="py-14 bg-slate-50">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+
+              {/* Left — Why Book */}
+              <div className="lg:col-span-1 space-y-5">
+                <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+                  <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+                    Why Choose Us
+                  </div>
+                  {[
+                    { icon: '✅', title: 'Verified Professionals', desc: 'All staff are background-checked and certified.' },
+                    { icon: '⚡', title: 'Same-Day Service', desc: 'Get care within hours of booking.' },
+                    { icon: '🔒', title: '100% Secure', desc: 'Your data is always private and protected.' },
+                    { icon: '💬', title: '24/7 Support', desc: 'We\'re always available to assist you.' },
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-start gap-3 py-3 border-b border-slate-100 last:border-0">
+                      <span className="text-xl shrink-0">{item.icon}</span>
+                      <div>
+                        <p className="font-semibold text-slate-800 text-sm">{item.title}</p>
+                        <p className="text-slate-400 text-xs mt-0.5">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Call us card */}
+                <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
+                  <p className="font-bold text-lg mb-1">Prefer to call?</p>
+                  <p className="text-white/80 text-sm mb-4">Our team is available 24/7 to take your booking.</p>
+                  <a
+                    href="tel:+918000000000"
+                    className="inline-flex items-center gap-2 bg-white text-orange-600 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-orange-50 transition-colors"
+                  >
+                    <Phone size={15} />
+                    +91 80000 00000
+                  </a>
+                </div>
+              </div>
+
+              {/* Right — Booking Form */}
+              <div className="lg:col-span-2">
+                <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
+
+                  <h2 className="font-display text-2xl font-bold text-slate-800 mb-6">
+                    Your Booking Details
+                  </h2>
+
+                  {/* Service Selection */}
+                  <div className="mb-6">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                      Select Service *
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {services.map((s) => (
+                        <label
+                          key={s.id}
+                          className={`flex items-center gap-3 p-3 border-2 rounded-xl cursor-pointer transition-all ${
+                            form.service === s.title
+                              ? 'border-orange-500 bg-orange-50'
+                              : 'border-slate-200 hover:border-orange-300'
+                          }`}
+                        >
+                          <input
+                            type="radio" name="service" value={s.title}
+                            checked={form.service === s.title}
+                            onChange={(e) => updateForm('service', e.target.value)}
+                            className="accent-orange-500"
+                          />
+                          <span className="text-lg">{s.icon}</span>
+                          <div>
+                            <p className="font-semibold text-slate-800 text-xs">{s.title}</p>
+                            <p className="text-xs text-orange-500 font-medium">{s.price}</p>
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="border-t border-slate-100 mb-6" />
+
+                  {/* Personal Details */}
+                  <div className="mb-6">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                      Personal Details
+                    </label>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="relative">
+                        <User size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400" />
+                        <input
+                          type="text" placeholder="Full Name *" value={form.name}
+                          onChange={(e) => updateForm('name', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                      <div className="relative">
+                        <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400" />
+                        <input
+                          type="tel" placeholder="Phone Number *" value={form.phone}
+                          onChange={(e) => updateForm('phone', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                      <div className="relative sm:col-span-2">
+                        <Mail size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400" />
+                        <input
+                          type="email" placeholder="Email Address" value={form.email}
+                          onChange={(e) => updateForm('email', e.target.value)}
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="border-t border-slate-100 mb-6" />
+
+                  {/* Location */}
+                  <div className="mb-6">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                      Your Location
+                    </label>
+                    <div className="grid sm:grid-cols-3 gap-4">
+                      <div className="relative sm:col-span-2">
+                        <MapPin size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400" />
+                        <input
+                          type="text" placeholder="Full Address *" value={form.address}
+                          onChange={(e) => updateForm('address', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text" placeholder="PIN Code *" value={form.pincode}
+                          onChange={(e) => updateForm('pincode', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="border-t border-slate-100 mb-6" />
+
+                  {/* Schedule */}
+                  <div className="mb-6">
+                    <label className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+                      Schedule
+                    </label>
+                    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                      <div className="relative">
+                        <Calendar size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400" />
+                        <input
+                          type="date" value={form.date}
+                          min={new Date().toISOString().split('T')[0]}
+                          onChange={(e) => updateForm('date', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        />
+                      </div>
+                      <div className="relative">
+                        <Clock size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-400 pointer-events-none" />
+                        <select
+                          value={form.time}
+                          onChange={(e) => updateForm('time', e.target.value)}
+                          required
+                          className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
+                        >
+                          <option value="">Select Time *</option>
+                          {['8:00 AM', '10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM'].map((t) => (
+                            <option key={t} value={t}>{t}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Notes */}
+                    <div className="relative">
+                      <FileText size={15} className="absolute left-3 top-3 text-orange-400" />
+                      <textarea
+                        rows={3} value={form.notes}
+                        onChange={(e) => updateForm('notes', e.target.value)}
+                        placeholder="Special instructions (optional)"
+                        className="w-full border border-slate-200 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50 resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={!isValid}
+                    className="w-full py-3.5 text-sm font-bold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 rounded-xl shadow-lg shadow-orange-200 hover:shadow-orange-300 hover:-translate-y-[1px] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                  >
+                    Confirm Booking →
+                  </button>
+
+                  <p className="text-center text-xs text-slate-400 mt-3">
+                    🔒 Your information is secure and will never be shared.
+                  </p>
+                </form>
+              </div>
             </div>
-            <h2 className="font-display text-3xl font-bold text-slate-800 mb-3">Booking Confirmed!</h2>
-            <p className="text-slate-500 mb-2">Your booking ID is <span className="font-bold text-orange-500">#IH-{Math.floor(Math.random()*100000)}</span></p>
-            <p className="text-slate-500 text-sm mb-8">
-              We've sent a confirmation to <strong>{form.email}</strong>. Our team will call you within 30 minutes to confirm the professional's details.
-            </p>
-            <div className="bg-orange-50 border border-orange-100 rounded-2xl p-5 text-left mb-6 space-y-2 text-sm">
-              <div className="flex justify-between"><span className="text-slate-400">Service</span><span className="font-medium text-slate-700">{form.service}</span></div>
-              <div className="flex justify-between"><span className="text-slate-400">Date</span><span className="font-medium text-slate-700">{form.date}</span></div>
-              <div className="flex justify-between"><span className="text-slate-400">Time</span><span className="font-medium text-slate-700">{form.time}</span></div>
-              <div className="flex justify-between"><span className="text-slate-400">Address</span><span className="font-medium text-slate-700">{form.address}, {form.pincode}</span></div>
-            </div>
-            <button
-              onClick={() => { setSubmitted(false); setStep(0); setForm({ service:'',name:'',phone:'',email:'',address:'',pincode:'',date:'',time:'',notes:'' }) }}
-              className="text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200"
-            >
-              Book Another Service
-            </button>
           </div>
         </section>
       </>
     )
   }
-
-  return (
-    <>
-      <PageHeader title="Book a Home Visit" subtitle="Get healthcare delivered to your door in a few simple steps." breadcrumbs={[{ label: 'Book' }]} />
-
-      <section className="py-14 bg-neutral-50">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6">
-          <StepIndicator current={step} />
-
-          <div className="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
-            {/* Step 0: Service */}
-            {step === 0 && (
-              <div>
-                <h3 className="font-display text-xl font-bold text-slate-800 mb-6">Choose a Service</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {services.map((s) => (
-                    <label
-                      key={s.id}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                        form.service === s.title
-                          ? 'border-orange-500 bg-orange-50'
-                          : 'border-slate-200 hover:border-orange-300'
-                      }`}
-                    >
-                      <input
-                        type="radio" name="service" value={s.title}
-                        checked={form.service === s.title}
-                        onChange={(e) => updateForm('service', e.target.value)}
-                        className="accent-orange-500"
-                      />
-                      <span className="text-xl">{s.icon}</span>
-                      <div>
-                        <p className="font-semibold text-slate-800 text-sm">{s.title}</p>
-                        <p className="text-xs text-slate-400">{s.price}</p>
-                      </div>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 1: Details */}
-            {step === 1 && (
-              <div>
-                <h3 className="font-display text-xl font-bold text-slate-800 mb-6">Your Details</h3>
-                <div className="space-y-4">
-                  {[
-                    { label: 'Full Name *', field: 'name', type: 'text', placeholder: 'Patient\'s full name' },
-                    { label: 'Phone Number *', field: 'phone', type: 'tel', placeholder: '+91 98765 43210' },
-                    { label: 'Email Address', field: 'email', type: 'email', placeholder: 'your@email.com' },
-                    { label: 'Full Address *', field: 'address', type: 'text', placeholder: 'House no, Street, Area, City' },
-                    { label: 'PIN Code *', field: 'pincode', type: 'text', placeholder: '641001' },
-                  ].map(({ label, field, type, placeholder }) => (
-                    <div key={field}>
-                      <label className="block text-sm font-medium text-slate-700 mb-1.5">{label}</label>
-                      <input
-                        type={type} placeholder={placeholder} value={form[field]}
-                        onChange={(e) => updateForm(field, e.target.value)}
-                        className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Schedule */}
-            {step === 2 && (
-              <div>
-                <h3 className="font-display text-xl font-bold text-slate-800 mb-6">Choose Schedule</h3>
-                <div className="space-y-5">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Preferred Date *</label>
-                    <input
-                      type="date" value={form.date}
-                      min={new Date().toISOString().split('T')[0]}
-                      onChange={(e) => updateForm('date', e.target.value)}
-                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">Preferred Time *</label>
-                    <div className="grid grid-cols-3 gap-2">
-                      {['8:00 AM', '10:00 AM', '12:00 PM', '2:00 PM', '4:00 PM', '6:00 PM'].map((t) => (
-                        <button
-                          key={t}
-                          type="button"
-                          onClick={() => updateForm('time', t)}
-                          className={`py-2 rounded-xl text-sm border-2 font-medium transition-all ${
-                            form.time === t
-                              ? 'border-orange-500 bg-orange-50 text-orange-600'
-                              : 'border-slate-200 text-slate-600 hover:border-orange-300'
-                          }`}
-                        >
-                          {t}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">Special Notes (optional)</label>
-                    <textarea
-                      rows={3} value={form.notes} onChange={(e) => updateForm('notes', e.target.value)}
-                      placeholder="Any specific instructions for the professional..."
-                      className="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50 resize-none"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Confirm */}
-            {step === 3 && (
-              <div>
-                <h3 className="font-display text-xl font-bold text-slate-800 mb-6">Review & Confirm</h3>
-                <div className="space-y-3 mb-6">
-                  {[
-                    { label: 'Service', value: form.service },
-                    { label: 'Patient Name', value: form.name },
-                    { label: 'Phone', value: form.phone },
-                    { label: 'Email', value: form.email || '—' },
-                    { label: 'Address', value: `${form.address}, ${form.pincode}` },
-                    { label: 'Date & Time', value: `${form.date} at ${form.time}` },
-                    { label: 'Notes', value: form.notes || '—' },
-                  ].map(({ label, value }) => (
-                    <div key={label} className="flex items-start justify-between gap-4 py-2 border-b border-slate-100 text-sm">
-                      <span className="text-slate-400 shrink-0">{label}</span>
-                      <span className="font-medium text-slate-700 text-right">{value}</span>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-xs text-slate-400 bg-orange-50 border border-orange-100 p-3 rounded-xl">
-                  By confirming, you agree to our Terms of Service and cancellation policy. A confirmation SMS and email will be sent after booking.
-                </p>
-              </div>
-            )}
-
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
-              <button
-                onClick={back} disabled={step === 0}
-                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-700 disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                <ArrowLeft size={15} /> Back
-              </button>
-              {step < STEPS.length - 1 ? (
-                <button
-                  onClick={next}
-                  disabled={step === 0 && !form.service}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Continue <ArrowRight size={15} />
-                </button>
-              ) : (
-                <button
-                  onClick={handleSubmit}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-                >
-                  Confirm Booking <CheckCircle size={15} />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}

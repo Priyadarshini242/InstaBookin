@@ -93,7 +93,7 @@ export default function Testimonials() {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3">
-            Patient Stories
+            Testimonials
           </div>
           <h2 className="section-title">What Our Patients Say</h2>
           <p className="section-subtitle mx-auto text-center">

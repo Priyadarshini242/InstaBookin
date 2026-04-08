@@ -3,11 +3,14 @@ import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Youtube } from 'luci
 import Logo from '../../assets/logo1.png'
 const footerLinks = {
   Services: [
-    { label: 'Physiotherapy', to: '/services' },
-    { label: 'Nursing Care', to: '/services' },
-    { label: 'Doctor Visit', to: '/services' },
-    { label: 'Lab Tests', to: '/services' },
-    { label: 'Elder Care', to: '/services' },
+    { label: '24 Hours home Nursing Services', to: '/services' },
+    { label: 'Nurse Bureaus', to: '/services' },
+    { label: 'Nursing Services', to: '/services' },
+    { label: 'Senior Citizen care taker services', to: '/services' },
+    { label: 'Care Taking at Home', to: '/services' },
+    { label: 'Child Care', to: '/services' },
+    { label: 'Elder Home Care', to: '/services' },
+    { label: 'Orthopedic Care', to: '/services' },
   ],
   Company: [
     { label: 'About Us', to: '/about' },

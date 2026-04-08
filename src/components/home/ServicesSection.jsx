@@ -2,9 +2,10 @@
 import { Link } from 'react-router-dom'
 import { services } from '../../data'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+
 function ServiceCard({ service }) {
   return (
-    <div className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col will-change-transform`}>
+    <Link to={`/services/${service.slug}`} className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col will-change-transform`}>
       <link rel="preload" as="image" href={service.image} />
       {/* Hover background image */}
       <div
@@ -41,15 +42,12 @@ function ServiceCard({ service }) {
             <p className="text-xs text-slate-400 group-hover:text-white/60 transition-colors duration-300">Starting from</p>
             <p className="font-extrabold text-orange-500 group-hover:text-orange-300 text-lg transition-colors duration-300">{service.price}</p>
           </div>
-          <Link
-            to="/book"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-4 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group-hover:gap-2.5"
-          >
-            Book Now <ArrowRight size={13} />
-          </Link>
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-2.5 rounded-xl shadow-sm">
+            View Details <ArrowRight size={13} />
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
