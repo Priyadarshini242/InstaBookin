@@ -1,105 +1,22 @@
-// Services Data
+// Services
+import homeNursing from './services/home-nursing'
+import nurseBureaus from './services/nurse-bureaus'
+import nursingServices from './services/nursing-services'
+import seniorCare from './services/senior-care'
+import caretakingHome from './services/caretaking-home'
+import childCare from './services/child-care'
+import elderHomeCare from './services/elder-home-care'
+import orthopedicCare from './services/orthopedic-care'
+
 export const services = [
-  {
-    id: 1,
-    title: '24 Hours Home Nursing Services',
-    image: "/24HoursHomeNursing.jpg",
-    slug: 'home-nursing',
-    description: 'Does your loved one gets enough and proper medical attention at home? We offer 24 hours home nursing services.',
-    price: '₹499',
-    duration: '45 min',
-    features: [
-      '24/7 continuous patient monitoring', 'Medication & injection support', 'Bedridden patient care', 'Vital signs tracking'],
-    color: 'from-teal-50 to-cyan-50',
-    accent: 'bg-teal-100 text-teal-700',
-  },
-  {
-    id: 2,
-    title: 'Nurse Bureaus',
-    image: "/nursebureaus.jpg",
-    slug: 'nurse-bureaus',
-    description: 'We provide specially trained and experienced nurses to look after patients at affordable charges.',
-    price: '₹349',
-    duration: '30 min',
-    features: ['Wound care', 'IV infusion', 'Catheter care', 'Injections'],
-    color: 'from-blue-50 to-indigo-50',
-    accent: 'bg-blue-100 text-blue-700',
-  },
-  {
-    id: 3,
-    title: 'Nursing Services',
-    image: "/NursingServices.jpg",
-    slug: 'nursing-services',
-    description: 'Our health center provides the most reliable nursing services for better care of patients and elders.',
-    price: '₹799',
-    duration: '30 min',
-    features: [
-      'Consultation', 'Chronic care', 'Prescriptions', 'Health checkups'],
-    color: 'from-purple-50 to-pink-50',
-    accent: 'bg-purple-100 text-purple-700',
-  },
-  {
-    id: 4,
-    title: 'Senior Citizen Care Taker Services',
-    image: "/seniorcitizencareTaker.png",
-    slug: 'senior-care',
-    description: 'We are professional care taker providing quality service for senior citizens at our space for the best price.',
-    price: '₹199',
-    duration: '15 min',
-    features: ['Blood tests', 'Urine analysis', 'ECG at home', 'Lab diagnostics'],
-    color: 'from-orange-50 to-amber-50',
-    accent: 'bg-orange-100 text-orange-700',
-  },
-  {
-    id: 5,
-    title: 'Caretaking At Home',
-    image: "/careTaking@home.png",
-    slug: 'caretaking-home',
-    description: 'We provide highly trained nurses who gives high-end quality care and services to patients at home.',
-    price: '₹599',
-    duration: 'Full day',
-    features: ['Daily care', 'Medication reminders', 'Companionship', 'Mobility help'],
-    color: 'from-green-50 to-emerald-50',
-    accent: 'bg-green-100 text-green-700',
-  },
-  {
-    id: 6,
-    title: 'Child Care',
-    image: "/childcare.png",
-    slug: 'child-care',
-    description: 'We provide highly qualified and experienced nurses who will take care of all your childs need with care.',
-    price: '₹299/day',
-    duration: 'Flexible',
-    features: [
-      'Child supervision', 'Feeding support', 'Hygiene care', 'Play activities'],
-    color: 'from-red-50 to-rose-50',
-    accent: 'bg-red-100 text-red-700',
-  },
-  {
-    id: 7,
-    title: 'Elder Home Care',
-    image: "/elderHomecare.png",
-    slug: 'elder-home-care',
-    description: 'Get personalized care with love and affection, all provided with the comfort of an homely atmosphere.',
-    price: '₹599',
-    duration: 'Full day',
-    features: ['Daily assistance', 'Medication help', 'Companionship', 'Fall prevention'],
-    color: 'from-green-50 to-emerald-50',
-    accent: 'bg-green-100 text-green-700',
-  },
-  {
-    id: 8,
-    title: 'Orthopedic Care',
-    image: "/orthopedicCare.png",
-    slug: 'orthopedic-care',
-    description: 'We are sure to take care of all your orthopedic needs with our trained and highly experienced staff.',
-    price: '₹499',
-    duration: '45 min',
-    features: [
-      'Rehabilitation', 'Pain management', 'Mobility recovery', 'Physiotherapy'],
-    color: 'from-teal-50 to-cyan-50',
-    accent: 'bg-teal-100 text-teal-700',
-  },
+  homeNursing,
+  nurseBureaus,
+  nursingServices,
+  seniorCare,
+  caretakingHome,
+  childCare,
+  elderHomeCare,
+  orthopedicCare,
 ]
 
 // Doctors Data

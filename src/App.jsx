@@ -10,6 +10,7 @@
   import TermsConditionsPage from './pages/TermsConditionsPage'
   import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
   import ServiceDetailPage from './pages/ServiceDetailPage'
+  import HireNursePage from './pages/HireNursePage'
 
   export default function App() {
     return (
@@ -26,6 +27,7 @@
             <Route path="/terms and conditions" element={<TermsConditionsPage /> } />
             <Route path="/privacy" element={<PrivacyPolicyPage /> } />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            <Route path="/hire-nurses" element={<HireNursePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

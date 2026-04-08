@@ -5,7 +5,7 @@ import Logo from '../../assets/logo1.png'
 import { services } from '../../data'
 
 const navLinks = [
-  
+   { to: '/hire-nurses', label: 'Join Us' },
   { to: '/doctors', label: 'Nurses' },
   { to: '/about', label: 'About Us' },
   { to: '/contact', label: 'Contact' },
