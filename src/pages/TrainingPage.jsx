@@ -1,0 +1,463 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  Syringe, Heart, Home, MessageSquare, Monitor,
+  CheckCircle2, X, ChevronRight, Star, Clock, Users, Award, Phone
+} from 'lucide-react'
+
+const courses = [
+  {
+    id: 1,
+    icon: Syringe,
+    title: 'Advanced Clinical Skills',
+    subtitle: 'Core procedures every nurse must master',
+    tag: 'Included',
+    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+    accentColor: 'border-slate-200',
+    modules: [
+      'IV Cannulation',
+      'Injection techniques',
+      'Wound dressing',
+      'Catheterization',
+      'Vital monitoring',
+      'Emergency handling',
+    ],
+    duration: '4 weeks',
+    seats: '20 seats',
+  },
+  {
+    id: 2,
+    icon: Heart,
+    title: 'ICU / Critical Care Training',
+    subtitle: 'Intensive care expertise for high-acuity settings',
+    tag: 'Premium',
+    tagStyle: 'bg-amber-50 text-amber-700 border border-amber-200',
+    isPremium: true,
+    accentColor: 'border-orange-400',
+    modules: [
+      'Ventilator handling',
+      'ICU monitoring systems',
+      'ECG basics',
+      'ABG basics',
+      'Emergency protocols',
+    ],
+    duration: '6 weeks',
+    seats: '15 seats',
+  },
+  {
+    id: 3,
+    icon: Home,
+    title: 'Home Healthcare Training',
+    subtitle: 'Specialized care for home and community settings',
+    tag: 'Included',
+    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+    accentColor: 'border-slate-200',
+    modules: [
+      'Home patient handling',
+      'Elder care',
+      'Bedridden patient care',
+      'Palliative care',
+      'Family communication',
+    ],
+    duration: '3 weeks',
+    seats: '25 seats',
+  },
+  {
+    id: 4,
+    icon: MessageSquare,
+    title: 'Soft Skills & Communication',
+    subtitle: 'Patient-facing skills that set great nurses apart',
+    tag: 'Included',
+    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+    accentColor: 'border-slate-200',
+    modules: [
+      'Patient communication',
+      'English speaking',
+      'Hospital etiquette',
+      'Reporting & documentation',
+    ],
+    duration: '2 weeks',
+    seats: '30 seats',
+  },
+  {
+    id: 5,
+    icon: Monitor,
+    title: 'Digital & System Training',
+    subtitle: 'Tech skills for the modern healthcare workplace',
+    tag: 'Included',
+    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+    accentColor: 'border-slate-200',
+    modules: [
+      'Hospital software usage',
+      'EMR (Electronic Medical Records)',
+      'Basic computer skills',
+    ],
+    duration: '2 weeks',
+    seats: '30 seats',
+  },
+]
+
+const stats = [
+  { icon: Users, value: '500+', label: 'Nurses trained' },
+  { icon: Award, value: '5', label: 'Certified programs' },
+  { icon: Star, value: '4.9', label: 'Average rating' },
+  { icon: Clock, value: '100%', label: 'Hands-on practice' },
+]
+
+const whyUs = [
+  { title: 'Certified trainers', desc: 'All sessions led by experienced clinical professionals with hospital backgrounds.' },
+  { title: 'Hands-on practice', desc: 'Real equipment, real scenarios — not just classroom theory.' },
+  { title: 'Flexible batches', desc: 'Weekend and weekday batches to fit your schedule.' },
+  { title: 'Placement support', desc: 'Top performers get priority placement within the Instabookin Health network.' },
+  { title: 'Certificate on completion', desc: 'Receive a recognized certificate after passing the assessment.' },
+  { title: 'Affordable fees', desc: 'Competitively priced with EMI options available on premium courses.' },
+]
+
+function EnrollModal({ isOpen, onClose, preselectedCourse }) {
+  const [form, setForm] = useState({
+    name: '',
+    phone: '',
+    city: '',
+    course: preselectedCourse || '',
+    message: '',
+  })
+  const [submitted, setSubmitted] = useState(false)
+
+  useEffect(() => {
+    if (preselectedCourse) setForm((f) => ({ ...f, course: preselectedCourse }))
+  }, [preselectedCourse])
+
+  useEffect(() => {
+    if (isOpen) document.body.style.overflow = 'hidden'
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // TODO: wire up to your backend / WhatsApp / email
+    setSubmitted(true)
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      style={{ background: 'rgba(15,23,42,0.55)', backdropFilter: 'blur(4px)' }}
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Orange top bar */}
+        <div className="bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-4">
+          <h2 className="text-white font-semibold text-lg">Enroll in a program</h2>
+          <p className="text-orange-100 text-sm mt-0.5">Our team will call you within 24 hours</p>
+        </div>
+
+        <button
+          onClick={onClose}
+          className="absolute top-3.5 right-4 text-white/80 hover:text-white transition-colors"
+        >
+          <X size={20} />
+        </button>
+
+        {submitted ? (
+          <div className="px-6 py-10 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+              <CheckCircle2 size={32} className="text-emerald-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-slate-800 mb-2">Enquiry received!</h3>
+            <p className="text-slate-500 text-sm mb-6">
+              Thank you, <span className="font-medium text-slate-700">{form.name}</span>. Our team
+              will contact you on <span className="font-medium text-slate-700">{form.phone}</span> within 24 hours.
+            </p>
+            <button
+              onClick={onClose}
+              className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-6 py-2.5 rounded-xl transition-colors"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="col-span-2 sm:col-span-1">
+                <label className="block text-xs font-medium text-slate-500 mb-1">Full name *</label>
+                <input
+                  required
+                  type="text"
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-transparent placeholder:text-slate-300"
+                />
+              </div>
+              <div className="col-span-2 sm:col-span-1">
+                <label className="block text-xs font-medium text-slate-500 mb-1">Phone number *</label>
+                <input
+                  required
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-transparent placeholder:text-slate-300"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">City *</label>
+              <input
+                required
+                type="text"
+                placeholder="Your city"
+                value={form.city}
+                onChange={(e) => setForm({ ...form, city: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-transparent placeholder:text-slate-300"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Course interest *</label>
+              <select
+                required
+                value={form.course}
+                onChange={(e) => setForm({ ...form, course: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-transparent bg-white"
+              >
+                <option value="">Select a program</option>
+                {courses.map((c) => (
+                  <option key={c.id} value={c.title}>{c.title}</option>
+                ))}
+                <option value="Not sure">Not sure — help me choose</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-medium text-slate-500 mb-1">Message (optional)</label>
+              <textarea
+                rows={3}
+                placeholder="Any questions or specific requirements..."
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:border-transparent placeholder:text-slate-300 resize-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold text-sm py-3 rounded-xl transition-all duration-200 hover:-translate-y-[1px] hover:shadow-md"
+            >
+              Submit Enquiry
+            </button>
+
+            <p className="text-center text-xs text-slate-400">
+              Or call us directly:{' '}
+              <a href="tel:+918000000000" className="text-orange-500 font-medium hover:underline">
+                +91 80000 00000
+              </a>
+            </p>
+          </form>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default function TrainingPage() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selectedCourse, setSelectedCourse] = useState('')
+
+  const openModal = (courseName = '') => {
+    setSelectedCourse(courseName)
+    setModalOpen(true)
+  }
+
+  // Handle #enroll anchor from navbar
+  useEffect(() => {
+    if (window.location.hash === '#enroll') {
+      setModalOpen(true)
+    }
+  }, [])
+
+  return (
+    <>
+      <EnrollModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        preselectedCourse={selectedCourse}
+      />
+
+      <main className="pt-[88px]"> {/* offset for fixed navbar + topbar */}
+
+        {/* ── Hero ── */}
+        <section className="bg-gradient-to-br from-orange-50 via-white to-white border-b border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+            <div className="flex flex-col md:flex-row md:items-center gap-10">
+              <div className="flex-1">
+                <span className="inline-block text-xs font-semibold uppercase tracking-widest text-orange-500 mb-4">
+                  New from Instabookin Health
+                </span>
+                <h1 className="text-4xl md:text-5xl font-bold text-[#2b314f] leading-tight mb-4">
+                  Advanced Clinical <br />
+                  <span className="text-orange-500">Training for Nurses</span>
+                </h1>
+                <p className="text-slate-500 text-lg max-w-xl mb-8 leading-relaxed">
+                  Hands-on, certified programs designed to elevate your nursing career — from core clinical skills to ICU readiness and digital healthcare.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <button
+                    onClick={() => openModal()}
+                    className="bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-[1px] hover:shadow-lg text-sm"
+                  >
+                    Enroll Now
+                  </button>
+                  <a
+                    href="tel:+918000000000"
+                    className="flex items-center gap-2 border border-slate-200 hover:border-orange-300 text-slate-700 hover:text-orange-600 font-semibold px-6 py-3 rounded-xl transition-all duration-200 text-sm"
+                  >
+                    <Phone size={15} />
+                    Call to enquire
+                  </a>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-4 md:w-72">
+                {stats.map(({ icon: Icon, value, label }) => (
+                  <div
+                    key={label}
+                    className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 flex flex-col items-center text-center gap-2"
+                  >
+                    <div className="w-9 h-9 rounded-xl bg-orange-50 flex items-center justify-center">
+                      <Icon size={17} className="text-orange-500" />
+                    </div>
+                    <p className="text-2xl font-bold text-[#2b314f]">{value}</p>
+                    <p className="text-xs text-slate-400">{label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Course Cards ── */}
+        <section id="courses" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#2b314f] mb-2">Our programs</h2>
+            <p className="text-slate-500">Choose the program that fits your goals. All included courses are bundled together.</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {courses.map((course) => {
+              const Icon = course.icon
+              return (
+                <div
+                  key={course.id}
+                  className={`bg-white rounded-2xl border-2 ${course.accentColor} p-5 flex flex-col gap-4 hover:shadow-md transition-shadow duration-200 relative`}
+                >
+                  {course.isPremium && (
+                    <div className="absolute -top-3 left-5">
+                      <span className="bg-gradient-to-r from-orange-500 to-amber-400 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                        Premium Course
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+                      <Icon size={20} className="text-orange-500" />
+                    </div>
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${course.tagStyle}`}>
+                      {course.tag}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#2b314f] mb-1">{course.title}</h3>
+                    <p className="text-xs text-slate-400">{course.subtitle}</p>
+                  </div>
+
+                  <ul className="space-y-1.5 flex-1">
+                    {course.modules.map((mod) => (
+                      <li key={mod} className="flex items-center gap-2 text-sm text-slate-600">
+                        <CheckCircle2 size={13} className="text-orange-400 flex-shrink-0" />
+                        {mod}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
+                    <div className="flex gap-3 text-xs text-slate-400">
+                      <span className="flex items-center gap-1">
+                        <Clock size={11} /> {course.duration}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Users size={11} /> {course.seats}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => openModal(course.title)}
+                      className="flex items-center gap-1 text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors"
+                    >
+                      Enroll <ChevronRight size={13} />
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </section>
+
+        {/* ── Why Us ── */}
+        <section className="bg-slate-50 border-y border-slate-100">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#2b314f] mb-2">Why train with us?</h2>
+              <p className="text-slate-500">We're not just a training centre — we're the platform that places you afterwards.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {whyUs.map((item) => (
+                <div key={item.title} className="bg-white rounded-2xl border border-slate-100 p-5">
+                  <div className="w-2 h-2 rounded-full bg-orange-400 mb-3" />
+                  <h4 className="text-sm font-bold text-[#2b314f] mb-1.5">{item.title}</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CTA Banner ── */}
+        <section id="enroll" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="bg-gradient-to-r from-orange-500 to-orange-400 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h2 className="text-white text-2xl md:text-3xl font-bold mb-2">Ready to get certified?</h2>
+              <p className="text-orange-100 text-sm md:text-base max-w-md">
+                Fill out a quick form and our team will contact you within 24 hours to confirm your seat and answer any questions.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+              <button
+                onClick={() => openModal()}
+                className="bg-white text-orange-600 font-bold px-7 py-3.5 rounded-xl text-sm hover:bg-orange-50 transition-colors shadow-sm"
+              >
+                Enquire Now →
+              </button>
+              <a
+                href="tel:+918000000000"
+                className="border-2 border-white/50 text-white font-semibold px-6 py-3.5 rounded-xl text-sm hover:bg-white/10 transition-colors text-center"
+              >
+                +91 80000 00000
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </>
+  )
+}

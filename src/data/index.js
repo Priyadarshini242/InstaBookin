@@ -7,7 +7,10 @@ import caretakingHome from './services/caretaking-home'
 import childCare from './services/child-care'
 import elderHomeCare from './services/elder-home-care'
 import orthopedicCare from './services/orthopedic-care'
-
+import motherBabyCare from './services/mother-baby-care' 
+import corporateHealthCare from './services/corporate-health-care.js'
+import specializedCare from './services/specialized-care.js'
+import palliativeCare  from './services/palliative-care.js'
 export const services = [
   homeNursing,
   nurseBureaus,
@@ -17,6 +20,10 @@ export const services = [
   childCare,
   elderHomeCare,
   orthopedicCare,
+   motherBabyCare,
+   corporateHealthCare,
+   specializedCare,
+   palliativeCare,
 ]
 
 // Doctors Data

@@ -18,6 +18,7 @@ const footerLinks = {
     { label: 'Careers', to: '/about' },
     { label: 'Blog', to: '/' },
     { label: 'Press', to: '/' },
+    { label: 'Careers', to: '/hire-nurses' },
   ],
   Support: [
     { label: 'Contact Us', to: '/contact' },
