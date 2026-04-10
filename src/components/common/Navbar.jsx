@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Menu, X, Phone, ChevronDown, GraduationCap, Stethoscope } from 'lucide-react'
+import { Menu, X, Phone, ChevronDown, GraduationCap, Stethoscope, MapPin } from 'lucide-react'
 import Logo from '../../assets/logo1.png'
 import { services } from '../../data'
 
@@ -24,6 +24,23 @@ const trainingLinks = [
   },
 ]
 
+const CITIES = ['Coimbatore', 'Chennai', 'Madurai', 'Trichy', 'Salem', 'Erode']
+
+// ── Saves city to localStorage and POSTs to backend ─────────────────────────
+async function persistCity(city) {
+  localStorage.setItem('selectedCity', city)
+  try {
+    await fetch('/api/user-city', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ city }),
+    })
+  } catch (err) {
+    // Non-blocking — city is already saved locally
+    console.warn('Failed to sync city to backend:', err)
+  }
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -34,6 +51,14 @@ export default function Navbar() {
   const [mobileNursesOpen, setMobileNursesOpen] = useState(false)
   const [mobileTrainingOpen, setMobileTrainingOpen] = useState(false)
   const [helpOpen, setHelpOpen] = useState(false)
+
+  // ── City selector state ──────────────────────────────────────────────────
+  const [cityOpen, setCityOpen] = useState(false)
+  const [selectedCity, setSelectedCity] = useState(
+    () => localStorage.getItem('selectedCity') || 'Coimbatore'
+  )
+  const cityRef = useRef(null)
+
   const dropdownRef = useRef(null)
   const trainingRef = useRef(null)
   const location = useLocation()
@@ -44,7 +69,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-
   useEffect(() => {
     setIsOpen(false)
     setServicesOpen(false)
@@ -52,62 +76,137 @@ export default function Navbar() {
     setNursesOpen(false)
   }, [location])
 
+  // Close city dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (cityRef.current && !cityRef.current.contains(e.target)) {
+        setCityOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleCitySelect = (city) => {
+    setSelectedCity(city)
+    setCityOpen(false)
+    persistCity(city)
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
         }`}
     >
-      {/* Top bar */}
+      {/* ── Top bar ── */}
       <div className="bg-[#2fa5e0] text-white text-xs px-6 py-2 hidden md:flex items-center justify-between">
+        {/* ── Mobile Top Bar ── */}
+        <div className="md:hidden bg-[#2fa5e0] text-white px-4 py-2 flex items-center justify-between text-xs">
 
-  {/* Left */}
-  <div className="flex items-center gap-4">
-    <span>📞</span>
-    <a
-      href="tel:+918000000000"
-      className="font-medium hover:underline"
-    >
-      +91 80000 00000
-    </a>
-    <span>|</span>
-    <span>24/7 Home Healthcare Services</span>
-  </div>
+          {/* Left: City */}
+          <button
+            onClick={() => setIsOpen(true)}
+            className="flex items-center gap-1 font-medium active:opacity-80"
+          >
+            <MapPin size={12} />
+            <span>{selectedCity}</span>
+          </button>
 
-        {/* Right */}
-        <div
-          className="relative"
-          onMouseEnter={() => setHelpOpen(true)}
-          onMouseLeave={() => setHelpOpen(false)}
-        >
-          <div className="flex items-center gap-2 cursor-pointer font-medium">
-            <Phone size={14} />
-            <span>Need Help?</span>
-          </div>
-
-          {helpOpen && (
-            <div className="absolute right-0 top-full mt-2 w-72 bg-white text-slate-700 rounded-xl shadow-xl border border-slate-100 p-4 z-50">
-              <div className="absolute -top-2 right-6 w-4 h-4 bg-white border-l border-t border-slate-100 rotate-45" />
-
-              <p className="text-sm font-semibold text-slate-800">Support</p>
-              <p className="text-xs text-slate-500 mt-1">
-                For Support & Appointment Booking call
-              </p>
-
-              <a
-                href="tel:+918000000000"
-                className="mt-3 flex items-center gap-2 text-orange-500 font-semibold hover:underline"
-              >
-                <Phone size={14} />
-                +91 80000 00000
-              </a>
-            </div>
-          )}
+          {/* Right: Call */}
+          <a
+  href="tel:+918000000000"
+  className="font-medium bg-white/20 px-2 py-1 rounded-md active:scale-95"
+>
+  📞 Call
+</a>
+        </div>
+        {/* Left: phone */}
+        <div className="flex items-center gap-4">
+          <span>📞</span>
+          <a href="tel:+918000000000" className="font-medium hover:underline">
+            +91 80000 00000
+          </a>
+          <span>|</span>
+          <span>24/7 Home Healthcare Services</span>
         </div>
 
+        {/* Right: city selector + Need Help */}
+        <div className="flex items-center gap-5">
+
+          {/* ── City selector ── */}
+          <div className="relative" ref={cityRef}>
+            <button
+              onClick={() => setCityOpen(!cityOpen)}
+              className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 transition-colors px-3 py-1 rounded-full font-medium"
+            >
+              <MapPin size={12} />
+              <span>{selectedCity}</span>
+              <ChevronDown
+                size={12}
+                className={`transition-transform duration-200 ${cityOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {cityOpen && (
+              <div className="absolute right-0 top-full mt-2 w-44 bg-white text-slate-700 rounded-xl shadow-xl border border-slate-100 py-1.5 z-50">
+                <div className="absolute -top-2 right-5 w-4 h-4 bg-white border-l border-t border-slate-100 rotate-45" />
+                <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 px-3 pb-1.5">
+                  Select your city
+                </p>
+                {CITIES.map((city) => (
+                  <button
+                    key={city}
+                    onClick={() => handleCitySelect(city)}
+                    className={`w-full text-left px-3 py-2 text-sm transition-colors flex items-center justify-between gap-2
+                      ${selectedCity === city
+                        ? 'text-orange-600 font-semibold bg-orange-50'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800'
+                      }`}
+                  >
+                    {city}
+                    {selectedCity === city && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Need Help */}
+          <div
+            className="relative"
+            onMouseEnter={() => setHelpOpen(true)}
+            onMouseLeave={() => setHelpOpen(false)}
+          >
+            <div className="flex items-center gap-2 cursor-pointer font-medium">
+              <Phone size={14} />
+              <span>Need Help?</span>
+            </div>
+
+            {helpOpen && (
+              <div className="absolute right-0 top-full mt-2 w-72 bg-white text-slate-700 rounded-xl shadow-xl border border-slate-100 p-4 z-50">
+                <div className="absolute -top-2 right-6 w-4 h-4 bg-white border-l border-t border-slate-100 rotate-45" />
+                <p className="text-sm font-semibold text-slate-800">Support</p>
+                <p className="text-xs text-slate-500 mt-1">
+                  For Support & Appointment Booking call
+                </p>
+                <a
+                  href="tel:+918000000000"
+                  className="mt-3 flex items-center gap-2 text-orange-500 font-semibold hover:underline"
+                >
+                  <Phone size={14} />
+                  +91 80000 00000
+                </a>
+              </div>
+            )}
+          </div>
+
+        </div>
       </div>
 
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-[72px]">
+        <div className="flex items-center justify-between h-[68px]">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
@@ -130,7 +229,7 @@ export default function Navbar() {
               <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300" />
             </NavLink>
 
-            {/* Services with dropdown */}
+            {/* Services dropdown */}
             <div
               className="relative h-full flex items-center"
               ref={dropdownRef}
@@ -152,7 +251,6 @@ export default function Navbar() {
                 <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300" />
               </NavLink>
 
-              {/* Services Dropdown */}
               {servicesOpen && (
                 <div
                   className="absolute top-full left-0 mt-0 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50"
@@ -213,19 +311,14 @@ export default function Navbar() {
                 <div className="absolute top-full left-0 mt-0 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
                   <div className="absolute -top-2 left-6 w-4 h-4 bg-white border-l border-t border-slate-100 rotate-45" />
 
-                  {/* Join Us */}
                   <Link
                     to="/hire-nurse"
                     className="flex items-center gap-3 px-4 py-2.5 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-150 group"
                   >
                     <span className="text-lg">👩‍⚕️</span>
-                    <span className="text-sm font-medium text-slate-700 group-hover:text-orange-600">
-                      Join Us
-                    </span>
+                    <span className="text-sm font-medium text-slate-700 group-hover:text-orange-600">Join Us</span>
                   </Link>
 
-                  {/* Training with right submenu */}
-                  {/* Training with right submenu */}
                   <div
                     className="relative"
                     ref={trainingRef}
@@ -237,17 +330,11 @@ export default function Navbar() {
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-lg">🎓</span>
-                        <span className="text-sm font-medium text-slate-700 group-hover:text-orange-600">
-                          Training
-                        </span>
+                        <span className="text-sm font-medium text-slate-700 group-hover:text-orange-600">Training</span>
                       </div>
-                      <ChevronDown
-                        size={13}
-                        className="text-slate-400 -rotate-90"
-                      />
+                      <ChevronDown size={13} className="text-slate-400 -rotate-90" />
                     </div>
 
-                    {/* Right submenu */}
                     {trainingOpen && (
                       <div className="absolute top-0 left-full w-72 bg-white rounded-2xl shadow-xl border border-slate-100 py-3 z-50">
                         <div className="absolute top-0 -left-4 w-4 h-full bg-transparent" />
@@ -344,6 +431,25 @@ export default function Navbar() {
               Home
             </NavLink>
 
+            {/* Mobile city selector */}
+            <div className="px-4 py-2">
+              <p className="text-xs text-slate-400 font-medium mb-1.5">Your location</p>
+              <div className="flex flex-wrap gap-2">
+                {CITIES.map((city) => (
+                  <button
+                    key={city}
+                    onClick={() => handleCitySelect(city)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${selectedCity === city
+                        ? 'bg-orange-500 text-white border-orange-500'
+                        : 'text-slate-600 border-slate-200 hover:border-orange-300 hover:text-orange-600'
+                      }`}
+                  >
+                    {city}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Mobile Services dropdown */}
             <div>
               <button
@@ -400,7 +506,6 @@ export default function Navbar() {
                     <span>Join Us</span>
                   </Link>
 
-                  {/* Mobile Training nested */}
                   <button
                     onClick={() => setMobileTrainingOpen(!mobileTrainingOpen)}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors"
