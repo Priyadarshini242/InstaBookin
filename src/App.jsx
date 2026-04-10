@@ -11,6 +11,7 @@
   import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
   import ServiceDetailPage from './pages/ServiceDetailPage'
   import HireNursePage from './pages/HireNursePage'
+  import TrainingPage from './pages/TrainingPage'
 
   export default function App() {
     return (
@@ -27,7 +28,8 @@
             <Route path="/terms and conditions" element={<TermsConditionsPage /> } />
             <Route path="/privacy" element={<PrivacyPolicyPage /> } />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
-            <Route path="/hire-nurses" element={<HireNursePage />} />
+            <Route path="/hire-nurse" element={<HireNursePage />} />
+            <Route path="/training" element={<TrainingPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
