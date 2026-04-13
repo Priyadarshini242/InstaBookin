@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
-export default function PageHeader({ title, subtitle, breadcrumbs = [] }) {
+export default function PageHeader({ title, subtitle, breadcrumbs = [], backgroundImage = '/hero-healthcare.png'}) {
   return (
     <div
       className="relative text-white overflow-hidden bg-cover bg-center"
-      style={{ backgroundImage: "url('/hero-healthcare.png')" }}
+      style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/10" />
 
       {/* Brand gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2b304f]/80 to-[#3a3f6b]/80" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#2b304f]/50 to-[#3a3f6b]/50" />
 
       {/* Subtle radial glow */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_40%)]" />

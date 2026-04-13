@@ -24,10 +24,10 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader
-        title="Contact Us"
-        subtitle="We're here to help. Reach out anytime — our team responds within 2 hours."
-        breadcrumbs={[{ label: 'Contact' }]}
-      />
+  title="Contact Us"
+  breadcrumbs={[{ label: 'Contact' }]}
+  backgroundImage="/Contact.jpg"
+/>
 
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
