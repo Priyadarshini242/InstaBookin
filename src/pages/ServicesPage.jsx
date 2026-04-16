@@ -64,9 +64,10 @@ export default function ServicesPage() {
   return (
     <>
       <PageHeader
-        title="Our Healthcare Services"
-        subtitle="Comprehensive home healthcare services delivered by certified professionals — right at your doorstep."
+        title="Our Services"
+        subtitle="..."
         breadcrumbs={[{ label: 'Services' }]}
+        backgroundImage="/Service.jpg"
       />
 
       {/* Service grid */}

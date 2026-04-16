@@ -1,102 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import {
-  Syringe, Heart, Home, MessageSquare, Monitor,
-  CheckCircle2, X, ChevronRight, Star, Clock, Users, Award, Phone
-} from 'lucide-react'
+import { CheckCircle2, X, ChevronRight, Star, Clock, Users, Award, Phone } from 'lucide-react'
+import courses from '../data/CoursesData'
 
-const courses = [
-  {
-    id: 1,
-    icon: Syringe,
-    title: 'Advanced Clinical Skills',
-    subtitle: 'Core procedures every nurse must master',
-    tag: 'Included',
-    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-    accentColor: 'border-slate-200',
-    modules: [
-      'IV Cannulation',
-      'Injection techniques',
-      'Wound dressing',
-      'Catheterization',
-      'Vital monitoring',
-      'Emergency handling',
-    ],
-    duration: '4 weeks',
-    seats: '20 seats',
-  },
-  {
-    id: 2,
-    icon: Heart,
-    title: 'ICU / Critical Care Training',
-    subtitle: 'Intensive care expertise for high-acuity settings',
-    tag: 'Premium',
-    tagStyle: 'bg-amber-50 text-amber-700 border border-amber-200',
-    isPremium: true,
-    accentColor: 'border-orange-400',
-    modules: [
-      'Ventilator handling',
-      'ICU monitoring systems',
-      'ECG basics',
-      'ABG basics',
-      'Emergency protocols',
-    ],
-    duration: '6 weeks',
-    seats: '15 seats',
-  },
-  {
-    id: 3,
-    icon: Home,
-    title: 'Home Healthcare Training',
-    subtitle: 'Specialized care for home and community settings',
-    tag: 'Included',
-    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-    accentColor: 'border-slate-200',
-    modules: [
-      'Home patient handling',
-      'Elder care',
-      'Bedridden patient care',
-      'Palliative care',
-      'Family communication',
-    ],
-    duration: '3 weeks',
-    seats: '25 seats',
-  },
-  {
-    id: 4,
-    icon: MessageSquare,
-    title: 'Soft Skills & Communication',
-    subtitle: 'Patient-facing skills that set great nurses apart',
-    tag: 'Included',
-    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-    accentColor: 'border-slate-200',
-    modules: [
-      'Patient communication',
-      'English speaking',
-      'Hospital etiquette',
-      'Reporting & documentation',
-    ],
-    duration: '2 weeks',
-    seats: '30 seats',
-  },
-  {
-    id: 5,
-    icon: Monitor,
-    title: 'Digital & System Training',
-    subtitle: 'Tech skills for the modern healthcare workplace',
-    tag: 'Included',
-    tagStyle: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-    accentColor: 'border-slate-200',
-    modules: [
-      'Hospital software usage',
-      'EMR (Electronic Medical Records)',
-      'Basic computer skills',
-    ],
-    duration: '2 weeks',
-    seats: '30 seats',
-  },
-]
-
+// ─── Stats & Why Us ──────────────────────────────────────────────────────────
 const stats = [
   { icon: Users, value: '500+', label: 'Nurses trained' },
   { icon: Award, value: '5', label: 'Certified programs' },
@@ -113,6 +20,7 @@ const whyUs = [
   { title: 'Affordable fees', desc: 'Competitively priced with EMI options available on premium courses.' },
 ]
 
+// ─── Enroll Modal ────────────────────────────────────────────────────────────
 function EnrollModal({ isOpen, onClose, preselectedCourse }) {
   const [form, setForm] = useState({
     name: '',
@@ -137,7 +45,6 @@ function EnrollModal({ isOpen, onClose, preselectedCourse }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // TODO: wire up to your backend / WhatsApp / email
     setSubmitted(true)
   }
 
@@ -151,7 +58,6 @@ function EnrollModal({ isOpen, onClose, preselectedCourse }) {
         className="bg-white rounded-2xl shadow-2xl w-full max-w-md relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Orange top bar */}
         <div className="bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-4">
           <h2 className="text-white font-semibold text-lg">Enroll in a program</h2>
           <p className="text-orange-100 text-sm mt-0.5">Our team will call you within 24 hours</p>
@@ -267,6 +173,7 @@ function EnrollModal({ isOpen, onClose, preselectedCourse }) {
   )
 }
 
+// ─── Training Page ───────────────────────────────────────────────────────────
 export default function TrainingPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState('')
@@ -276,7 +183,6 @@ export default function TrainingPage() {
     setModalOpen(true)
   }
 
-  // Handle #enroll anchor from navbar
   useEffect(() => {
     if (window.location.hash === '#enroll') {
       setModalOpen(true)
@@ -291,7 +197,7 @@ export default function TrainingPage() {
         preselectedCourse={selectedCourse}
       />
 
-      <main className="pt-[88px]"> {/* offset for fixed navbar + topbar */}
+      <main className="pt-[88px]">
 
         {/* ── Hero ── */}
         <section className="bg-gradient-to-br from-orange-50 via-white to-white border-b border-slate-100">
@@ -325,7 +231,6 @@ export default function TrainingPage() {
                 </div>
               </div>
 
-              {/* Stats */}
               <div className="grid grid-cols-2 gap-4 md:w-72">
                 {stats.map(({ icon: Icon, value, label }) => (
                   <div
@@ -355,58 +260,103 @@ export default function TrainingPage() {
             {courses.map((course) => {
               const Icon = course.icon
               return (
-                <div
+                <Link
                   key={course.id}
-                  className={`bg-white rounded-2xl border-2 ${course.accentColor} p-5 flex flex-col gap-4 hover:shadow-md transition-shadow duration-200 relative`}
+                  to={`/training/${course.slug}`}
+                  className={`group bg-white rounded-2xl border-2 ${course.accentColor} flex flex-col hover:shadow-xl transition-all duration-300 relative overflow-hidden cursor-pointer`}
                 >
+                  {/* ── Premium badge ── */}
                   {course.isPremium && (
-                    <div className="absolute -top-3 left-5">
+                    <div className="absolute top-3 left-4 z-20">
                       <span className="bg-gradient-to-r from-orange-500 to-amber-400 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
                         Premium Course
                       </span>
                     </div>
                   )}
 
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
-                      <Icon size={20} className="text-orange-500" />
+                  {/* ── Hover image overlay ── */}
+                  <div className="absolute inset-0 z-10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.68,1)] rounded-[14px] overflow-hidden">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+
+                    <div className="absolute inset-0 flex flex-col justify-end p-5 gap-3">
+                      <div className="translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+                        <h3 className="text-white font-bold text-base leading-snug mb-0.5">{course.title}</h3>
+                        <p className="text-white/70 text-xs">{course.subtitle}</p>
+                      </div>
+
+                      <div className="flex gap-2 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150">
+                        <span className="flex items-center gap-1 text-[11px] text-white/80 bg-white/10 backdrop-blur-sm border border-white/20 px-2.5 py-1 rounded-full">
+                          <Clock size={10} /> {course.duration}
+                        </span>
+                        <span className="flex items-center gap-1 text-[11px] text-white/80 bg-white/10 backdrop-blur-sm border border-white/20 px-2.5 py-1 rounded-full">
+                          <Users size={10} /> {course.seats}
+                        </span>
+                      </div>
+
+                      {/* Only Enroll button on the overlay — stopPropagation prevents card navigation */}
+                      <div className="flex gap-2 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+                        <span className="flex-1 text-center text-xs font-semibold bg-white/10 border border-white/30 text-white py-2.5 rounded-xl">
+                          View details →
+                        </span>
+                        <button
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(course.title) }}
+                          className="flex-1 text-xs font-semibold bg-orange-500 hover:bg-orange-600 text-white py-2.5 rounded-xl transition-colors"
+                        >
+                          Enroll
+                        </button>
+                      </div>
                     </div>
-                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${course.tagStyle}`}>
-                      {course.tag}
-                    </span>
                   </div>
 
-                  <div>
-                    <h3 className="text-base font-bold text-[#2b314f] mb-1">{course.title}</h3>
-                    <p className="text-xs text-slate-400">{course.subtitle}</p>
-                  </div>
-
-                  <ul className="space-y-1.5 flex-1">
-                    {course.modules.map((mod) => (
-                      <li key={mod} className="flex items-center gap-2 text-sm text-slate-600">
-                        <CheckCircle2 size={13} className="text-orange-400 flex-shrink-0" />
-                        {mod}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
-                    <div className="flex gap-3 text-xs text-slate-400">
-                      <span className="flex items-center gap-1">
-                        <Clock size={11} /> {course.duration}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={11} /> {course.seats}
+                  {/* ── Card default content ── */}
+                  <div className="p-5 flex flex-col gap-4 flex-1">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="w-11 h-11 rounded-xl bg-orange-50 flex items-center justify-center flex-shrink-0">
+                        <Icon size={20} className="text-orange-500" />
+                      </div>
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${course.tagStyle}`}>
+                        {course.tag}
                       </span>
                     </div>
-                    <button
-                      onClick={() => openModal(course.title)}
-                      className="flex items-center gap-1 text-xs font-semibold text-orange-500 hover:text-orange-600 transition-colors"
-                    >
-                      Enroll <ChevronRight size={13} />
-                    </button>
+
+                    <div>
+                      <h3 className="text-base font-bold text-[#2b314f] mb-1">{course.title}</h3>
+                      <p className="text-xs text-slate-400">{course.subtitle}</p>
+                    </div>
+
+                    <ul className="space-y-1.5 flex-1">
+                      {course.modules.map((mod) => (
+                        <li key={mod} className="flex items-center gap-2 text-sm text-slate-600">
+                          <CheckCircle2 size={13} className="text-orange-400 flex-shrink-0" />
+                          {mod}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="border-t border-slate-100 pt-3 flex items-center justify-between">
+                      <div className="flex gap-3 text-xs text-slate-400">
+                        <span className="flex items-center gap-1"><Clock size={11} /> {course.duration}</span>
+                        <span className="flex items-center gap-1"><Users size={11} /> {course.seats}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="flex items-center gap-1 text-xs font-semibold text-slate-500">
+                          View details <ChevronRight size={13} />
+                        </span>
+                        <button
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); openModal(course.title) }}
+                          className="text-xs font-semibold bg-orange-500 hover:bg-orange-600 text-white px-3 py-1.5 rounded-lg transition-colors"
+                        >
+                          Enroll
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

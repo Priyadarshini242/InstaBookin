@@ -38,10 +38,10 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        title="About Instabookin Health"
-        subtitle="We are on a mission to make high-quality healthcare accessible to every Indian family — right at their doorstep."
-        breadcrumbs={[{ label: 'About Us' }]}
-      />
+  title="About Us"
+  breadcrumbs={[{ label: 'About Us' }]}
+  backgroundImage="/aboutUs.jpg"
+/>
 
       {/* Mission */}
       <section className="py-20 bg-white">

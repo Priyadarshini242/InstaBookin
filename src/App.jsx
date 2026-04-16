@@ -12,6 +12,7 @@
   import ServiceDetailPage from './pages/ServiceDetailPage'
   import HireNursePage from './pages/HireNursePage'
   import TrainingPage from './pages/TrainingPage'
+  import CourseDetailPage from './pages/CourseDetail'
 
   export default function App() {
     return (
@@ -30,6 +31,7 @@
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/hire-nurse" element={<HireNursePage />} />
             <Route path="/training" element={<TrainingPage />} />
+            <Route path="/training/:slug" element={<CourseDetailPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

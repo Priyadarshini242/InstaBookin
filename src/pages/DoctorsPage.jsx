@@ -94,9 +94,9 @@ export default function DoctorsPage() {
   return (
     <>
       <PageHeader
-        title="Our Doctors & Specialists"
-        subtitle="Connect with 200+ verified doctors and healthcare professionals available for home visits."
+        title="Our Doctors"
         breadcrumbs={[{ label: 'Doctors' }]}
+        backgroundImage="/Doctors.jpg"
       />
 
       {/* Filters */}
