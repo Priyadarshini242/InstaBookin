@@ -23,10 +23,28 @@ export default function HireNursePage() {
 
   const update = (field, val) => setForm(f => ({ ...f, [field]: val }))
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setSubmitted(true)
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("http://localhost:5000/api/nurses", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(form)
+    });
+
+    const data = await res.json();
+    console.log(data);
+
+    setSubmitted(true);
+
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting application");
   }
+};
 
   if (submitted) {
     return (
