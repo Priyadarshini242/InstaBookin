@@ -114,7 +114,6 @@ export default function HireNursePage() {
                   Why Join Us
                 </div>
                 {[
-                  { icon: '💰', title: 'Competitive Pay', desc: 'Earn more than hospital salaries with flexible hours.' },
                   { icon: '🕐', title: 'Flexible Shifts', desc: 'Day, night or 24-hour shifts — your choice.' },
                   { icon: '📈', title: 'Career Growth', desc: 'Training, certifications and promotions available.' },
                   { icon: '🏠', title: 'Work Near Home', desc: 'Get assigned patients in your preferred location.' },
@@ -406,7 +405,7 @@ export default function HireNursePage() {
                       <input type="text" required placeholder="City or area you prefer" value={form.preferredLocation}
                         onChange={e => update('preferredLocation', e.target.value)} className={inputClass} />
                     </div>
-                    <div>
+                    {/* <div>
                       <label className={labelClass}>Expected Salary (per month) *</label>
                       <select required value={form.expectedSalary}
                         onChange={e => update('expectedSalary', e.target.value)} className={inputClass}>
@@ -417,7 +416,7 @@ export default function HireNursePage() {
                         <option>₹30,000 – ₹40,000</option>
                         <option>Above ₹40,000</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className="sm:col-span-2">
                       <label className={labelClass}>Available to Join *</label>
                       <div className="flex gap-2 flex-wrap">

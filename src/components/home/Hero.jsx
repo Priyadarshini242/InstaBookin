@@ -162,21 +162,20 @@ animate-[iconFloat_3s_ease-in-out_infinite] group">
 
               {/* Heading */}
               <h3 className="text-2xl font-extrabold text-center text-slate-800 mb-3">
-                Join Our Nursing Team
+               Book Trusted Healthcare at Home
               </h3>
 
               {/* Subtext */}
               <p className="text-center text-slate-500 text-sm mb-6 leading-relaxed">
-                Work with India's fastest-growing home healthcare platform.
-                Flexible hours, great pay, and meaningful impact.
+               Get professional healthcare services at your doorstep. Easy booking, certified nurses, and reliable care for you and your family.
               </p>
 
               {/* Highlights */}
               <div className="space-y-2 mb-7">
                 {[
-                  'Flexible Work Schedule',
-                  'Attractive Earnings',
-                  'Verified Patient Network',
+                  'Easy Appointment Booking',
+                  'Certified & Experienced Nurses',
+                  'Safe & Reliable Home Care',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm text-slate-600">
                     <CheckCircle size={14} className="text-orange-500" />
@@ -188,10 +187,10 @@ animate-[iconFloat_3s_ease-in-out_infinite] group">
               {/* CTA Button */}
               <div className="relative overflow-hidden rounded-xl">
                 <Link
-                  to="/hire-nurse"
+                  to="/book"
                   className="relative block text-center w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl overflow-hidden hover:scale-[1.02] transition-transform duration-300"
                 >
-                  Apply Now →
+                  Book Now →
 
                   {/* Diagonal Shine */}
                   <span

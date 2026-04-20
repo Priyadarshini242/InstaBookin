@@ -17,8 +17,7 @@ export default function PageHeader({ title, subtitle, breadcrumbs = [], backgrou
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_40%)]" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[110px] md:pt-[120px] lg:pt-[130px] pb-16">
-
+<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center pt-[120px]">
         {/* Breadcrumb */}
         {breadcrumbs.length > 0 && (
           <nav className="flex items-center gap-1.5 text-white/60 text-sm mb-6">
