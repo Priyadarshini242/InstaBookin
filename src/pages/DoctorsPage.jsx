@@ -94,7 +94,7 @@ export default function DoctorsPage() {
   return (
     <>
       <PageHeader
-        title="Our Doctors"
+        title="Our Nurses"
         breadcrumbs={[{ label: 'Doctors' }]}
         backgroundImage="/Doctors.jpg"
       />

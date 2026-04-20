@@ -23,28 +23,56 @@ export default function HireNursePage() {
 
   const update = (field, val) => setForm(f => ({ ...f, [field]: val }))
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await fetch("http://localhost:5000/api/nurses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(form)
-    });
+    try {
+      const res = await fetch("http://localhost:5000/api/nurses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          name: form.fullName, // 🔥 IMPORTANT (admin ku venum)
 
-    const data = await res.json();
-    console.log(data);
+          phone: form.phone,
+          email: form.email,
+          specialization: form.specialization,
+          experience: form.experience,
 
-    setSubmitted(true);
+          status: "pending",
+          verified: false,
+          docs: "pending",
 
-  } catch (err) {
-    console.error(err);
-    alert("Error submitting application");
-  }
-};
+          // 🔥 documents for eye view
+          documents: [
+            form.certificate && {
+              label: "Nursing Certificate",
+              url: URL.createObjectURL(form.certificate)
+            },
+            form.idProof && {
+              label: "ID Proof",
+              url: URL.createObjectURL(form.idProof)
+            },
+            form.resume && {
+              label: "Resume",
+              url: URL.createObjectURL(form.resume)
+            }
+          ].filter(Boolean)
+        })
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      setSubmitted(true);
+
+    } catch (err) {
+      console.error(err);
+      alert("Error submitting application");
+    }
+  };
 
   if (submitted) {
     return (
@@ -371,11 +399,10 @@ export default function HireNursePage() {
                           <button
                             key={t} type="button"
                             onClick={() => update('workType', t)}
-                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${
-                              form.workType === t
+                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${form.workType === t
                                 ? 'border-orange-500 bg-orange-50 text-orange-600'
                                 : 'border-slate-200 text-slate-600 hover:border-orange-300'
-                            }`}
+                              }`}
                           >
                             {t}
                           </button>
@@ -389,11 +416,10 @@ export default function HireNursePage() {
                           <button
                             key={s} type="button"
                             onClick={() => update('shift', s)}
-                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${
-                              form.shift === s
+                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${form.shift === s
                                 ? 'border-orange-500 bg-orange-50 text-orange-600'
                                 : 'border-slate-200 text-slate-600 hover:border-orange-300'
-                            }`}
+                              }`}
                           >
                             {s}
                           </button>
@@ -405,18 +431,7 @@ export default function HireNursePage() {
                       <input type="text" required placeholder="City or area you prefer" value={form.preferredLocation}
                         onChange={e => update('preferredLocation', e.target.value)} className={inputClass} />
                     </div>
-                    {/* <div>
-                      <label className={labelClass}>Expected Salary (per month) *</label>
-                      <select required value={form.expectedSalary}
-                        onChange={e => update('expectedSalary', e.target.value)} className={inputClass}>
-                        <option value="">Select Range</option>
-                        <option>Below ₹15,000</option>
-                        <option>₹15,000 – ₹20,000</option>
-                        <option>₹20,000 – ₹30,000</option>
-                        <option>₹30,000 – ₹40,000</option>
-                        <option>Above ₹40,000</option>
-                      </select>
-                    </div> */}
+
                     <div className="sm:col-span-2">
                       <label className={labelClass}>Available to Join *</label>
                       <div className="flex gap-2 flex-wrap">
@@ -424,11 +439,10 @@ export default function HireNursePage() {
                           <button
                             key={a} type="button"
                             onClick={() => update('availability', a)}
-                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${
-                              form.availability === a
+                            className={`px-4 py-2 rounded-xl text-sm border-2 font-medium transition-all ${form.availability === a
                                 ? 'border-orange-500 bg-orange-50 text-orange-600'
                                 : 'border-slate-200 text-slate-600 hover:border-orange-300'
-                            }`}
+                              }`}
                           >
                             {a}
                           </button>
