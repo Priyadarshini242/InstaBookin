@@ -5,8 +5,18 @@ import PageHeader from '../components/common/PageHeader'
 import { doctors } from '../data'
 import CTABanner from '../components/home/CTABanner'
 
-const specialties = ['All', 'General Physician', 'Physiotherapist', 'Cardiologist', 'Neurologist', 'Diabetologist', 'Orthopedic Surgeon']
-
+const specialties = [
+  'All',
+  'Wound Care',
+  'IV Therapy',
+  'Physiotherapy',
+  'Elder Care',
+  'Pediatric Care',
+  'Post-Op Care',
+  'Critical Care',
+  'Mother & Baby Care',
+  'Palliative Care',
+]
 function DoctorCard({ doctor }) {
   return (
     <div className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-4 overflow-hidden">
@@ -49,34 +59,6 @@ function DoctorCard({ doctor }) {
           </span>
         ))}
       </div>
-
-      {/* Rating & fee */}
-      <div className="flex items-center justify-between py-3 border-t border-b border-slate-100">
-        <div className="flex items-center gap-1">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              size={13}
-              className={i < Math.floor(doctor.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200 fill-slate-200'}
-            />
-          ))}
-          <span className="font-semibold text-slate-700 text-sm ml-1">{doctor.rating}</span>
-          <span className="text-slate-400 text-xs">({doctor.reviews})</span>
-        </div>
-        <div className="text-right">
-          <span className="text-xs text-slate-400">Fee</span>
-          <p className="font-extrabold text-orange-500 text-sm">{doctor.consultationFee}</p>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <Link
-        to="/book"
-        className="inline-flex items-center justify-center gap-2 w-full text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group-hover:gap-3 mt-auto"
-      >
-        Book Appointment
-        <ArrowRight size={14} />
-      </Link>
     </div>
   )
 }
@@ -108,7 +90,7 @@ export default function DoctorsPage() {
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search by name or specialty..."
+                placeholder="Search by name or specialization..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 bg-slate-50"
@@ -140,15 +122,16 @@ export default function DoctorsPage() {
           {filtered.length === 0 ? (
             <div className="text-center py-16 text-slate-400">
               <p className="text-5xl mb-4">🔍</p>
-              <p className="font-medium text-lg">No doctors found matching your search.</p>
-              <button onClick={() => { setSearchQuery(''); setSelectedSpecialty('All') }} className="mt-4 text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200">
+              <p className="font-medium text-lg">No nurses found matching your search.</p>             
+               <button onClick={() => { setSearchQuery(''); setSelectedSpecialty('All') }} className="mt-4 text-sm font-semibold text-orange-500 border-2 border-orange-400 hover:bg-orange-500 hover:text-white px-6 py-2.5 rounded-xl transition-all duration-200">
                 Clear Filters
               </button>
             </div>
           ) : (
             <>
-              <p className="text-sm text-slate-400 mb-6">{filtered.length} doctor{filtered.length !== 1 ? 's' : ''} found</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <p className="text-sm text-slate-400 mb-6">
+                {filtered.length} nurse{filtered.length !== 1 ? 's' : ''} found
+              </p>              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filtered.map((doc) => (
                   <DoctorCard key={doc.id} doctor={doc} />
                 ))}

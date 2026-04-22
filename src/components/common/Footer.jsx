@@ -21,7 +21,7 @@ const footerLinks = {
     { label: 'Our Doctors', to: '/doctors' },
     { label: 'Blog', to: '/' },
     { label: 'Press', to: '/' },
-    { label: 'Careers', to: '/hire-nurse' },
+    // { label: 'Careers', to: '/hire-nurse' },
   ],
   Support: [
     { label: 'Contact Us', to: '/contact' },

@@ -65,6 +65,7 @@ export default function Hero() {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
+      
     }}
   >  <div className="absolute inset-0 bg-[#2b314f]/60" />
     <div className="absolute inset-0 overflow-hidden">
@@ -73,7 +74,7 @@ export default function Hero() {
       <div className="absolute top-1/3 right-1/3 w-6 h-6 bg-accent-400/30 rounded-full" />
     </div>
 
-    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-20 md:pt-6 md:pb-28">
+   <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[60px] pb-20 md:pt-[70px] md:pb-28">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Left content */}
         <div className="text-white">
@@ -118,10 +119,10 @@ export default function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
-              to="/book"
+              to="/contact"
               className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold px-8 py-3.5 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-[2px]"
             >
-              Book a Home Visit
+               Contact 
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link

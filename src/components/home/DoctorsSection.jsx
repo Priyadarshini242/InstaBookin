@@ -41,34 +41,6 @@ function DoctorCard({ doctor, index }) {
           {doctor.availability}
         </span>
       </div>
-
-      {/* Rating & fee */}
-      <div className="flex items-center justify-between py-3 border-t border-b border-slate-100">
-        <div className="flex items-center gap-1">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              size={13}
-              className={i < Math.floor(doctor.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-slate-200 fill-slate-200'}
-            />
-          ))}
-          <span className="font-semibold text-slate-700 text-sm ml-1">{doctor.rating}</span>
-          <span className="text-slate-400 text-xs">({doctor.reviews})</span>
-        </div>
-        <div className="text-right">
-          <span className="text-xs text-slate-400">Fee</span>
-          <p className="font-extrabold text-orange-500 text-sm">{doctor.consultationFee}</p>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <Link
-        to="/book"
-        className="inline-flex items-center justify-center gap-2 w-full text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 py-2.5 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 group-hover:gap-3 mt-auto"
-      >
-        Book Appointment
-        <ArrowRight size={14} />
-      </Link>
     </div>
   )
 }
