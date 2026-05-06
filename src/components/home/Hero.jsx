@@ -65,16 +65,16 @@ export default function Hero() {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      
+
     }}
-  >  <div className="absolute inset-0 bg-[#2b314f]/60" />
+  >  <div className="absolute inset-0 bg-[#2b314f]/35" />
     <div className="absolute inset-0 overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 translate-y-1/2" />
       <div className="absolute top-1/3 right-1/3 w-6 h-6 bg-accent-400/30 rounded-full" />
     </div>
 
-   <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[60px] pb-20 md:pt-[70px] md:pb-28">
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[60px] pb-20 md:pt-[70px] md:pb-28">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         {/* Left content */}
         <div className="text-white">
@@ -122,7 +122,7 @@ export default function Hero() {
               to="/contact"
               className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold px-8 py-3.5 rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-[2px]"
             >
-               Contact 
+              Contact
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
@@ -163,12 +163,12 @@ animate-[iconFloat_3s_ease-in-out_infinite] group">
 
               {/* Heading */}
               <h3 className="text-2xl font-extrabold text-center text-slate-800 mb-3">
-               Book Trusted Healthcare at Home
+                Book Trusted Healthcare at Home
               </h3>
 
               {/* Subtext */}
               <p className="text-center text-slate-500 text-sm mb-6 leading-relaxed">
-               Get professional healthcare services at your doorstep. Easy booking, certified nurses, and reliable care for you and your family.
+                Get professional healthcare services at your doorstep. Easy booking, certified nurses, and reliable care for you and your family.
               </p>
 
               {/* Highlights */}
@@ -188,10 +188,10 @@ animate-[iconFloat_3s_ease-in-out_infinite] group">
               {/* CTA Button */}
               <div className="relative overflow-hidden rounded-xl">
                 <Link
-                  to="/book"
+                  to="/services"
                   className="relative block text-center w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold py-3 rounded-xl overflow-hidden hover:scale-[1.02] transition-transform duration-300"
                 >
-                  Book Now →
+                  All Services →
 
                   {/* Diagonal Shine */}
                   <span

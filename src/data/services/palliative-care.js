@@ -3,6 +3,7 @@ export default {
   title: 'Palliative Care',
   image: '/palliative care.png',
   slug: 'palliative-care',
+  path: '/palliative-care',
   description: 'Compassionate care focused on improving quality of life for patients with serious illnesses.',
   price: '₹799',
   duration: 'Full day',

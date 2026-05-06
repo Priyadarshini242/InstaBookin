@@ -3,6 +3,7 @@ export default {
   title: 'Senior Citizen Care Taker Services',
   image: '/seniorcitizencareTaker.png',
   slug: 'senior-care',
+  path: '/seniorcitizen',
   description: 'We are professional care takers providing quality service for senior citizens at the best price.',
   price: '₹199',
   duration: '15 min',

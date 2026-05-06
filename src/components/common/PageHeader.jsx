@@ -1,23 +1,20 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
-export default function PageHeader({ title, subtitle, breadcrumbs = [], backgroundImage = '/hero-healthcare.png'}) {
+export default function PageHeader({ title, subtitle, breadcrumbs = [], backgroundImage = '/hero-healthcare.png' }) {
   return (
     <div
       className="relative text-white overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/10" />
-
       {/* Brand gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#2b304f]/50 to-[#3a3f6b]/50" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#2b304f]/25 to-[#3a3f6b]/20" />
 
       {/* Subtle radial glow */}
-      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_40%)]" />
+      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_20%_30%,white,transparent_40%),radial-gradient(circle_at_80%_70%,white,transparent_40%)]" />
 
       {/* Content */}
-<div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center pt-[120px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[85vh] flex flex-col justify-center pt-[120px]">
         {/* Breadcrumb */}
         {breadcrumbs.length > 0 && (
           <nav className="flex items-center gap-1.5 text-white/60 text-sm mb-6">

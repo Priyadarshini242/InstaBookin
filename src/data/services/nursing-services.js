@@ -3,6 +3,7 @@ export default {
   title: 'Nursing Services',
   image: '/NursingServices.jpg',
   slug: 'nursing-services',
+  path: '/nursing',
   description: 'Our health center provides the most reliable nursing services for better care of patients and elders.',
   price: '₹799',
   duration: '30 min',

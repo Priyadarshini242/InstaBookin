@@ -18,7 +18,7 @@ const footerLinks = {
   ],
   Company: [
     { label: 'About Us', to: '/about' },
-    { label: 'Our Doctors', to: '/doctors' },
+    { label: 'Our Nurses', to: '/doctors' },
     { label: 'Blog', to: '/' },
     { label: 'Press', to: '/' },
     // { label: 'Careers', to: '/hire-nurse' },

@@ -3,6 +3,7 @@ export default {
   title: 'Nurse Bureaus',
   image: '/nursebureaus.jpg',
   slug: 'nurse-bureaus',
+  path: '/bureaus',
   description: 'We provide specially trained and experienced nurses to look after patients at affordable charges.',
   price: '₹349',
   duration: '30 min',

@@ -3,6 +3,7 @@ export default {
   title: 'Corporate Health Services',
   image: '/corporate health.png',
   slug: 'corporate-health-care',
+  path: '/corporate-health',
   description: 'Comprehensive healthcare solutions for employees, ensuring workplace wellness, productivity, and preventive care.',
   price: '₹999',
   duration: 'Custom plans',

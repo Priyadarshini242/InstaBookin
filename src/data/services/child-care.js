@@ -3,6 +3,7 @@ export default {
   title: 'Child Care',
   image: '/childcare.png',
   slug: 'child-care',
+  path: '/childcare',
   description: 'We provide highly qualified and experienced nurses who will take care of all your child\'s needs with care.',
   price: '₹299/day',
   duration: 'Flexible',

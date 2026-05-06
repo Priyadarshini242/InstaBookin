@@ -5,7 +5,7 @@ import { ArrowRight, CheckCircle } from 'lucide-react'
 
 function ServiceCard({ service }) {
   return (
-    <Link to={`/services/${service.slug}`} className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col will-change-transform`}>
+    <Link to={service.path || `/services/${service.slug}`}className={`relative bg-gradient-to-br ${service.color} rounded-2xl overflow-hidden border border-white hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col will-change-transform`}>
       <link rel="preload" as="image" href={service.image} />
       {/* Hover background image */}
       <div

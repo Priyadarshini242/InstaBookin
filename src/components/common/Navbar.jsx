@@ -1,12 +1,27 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Menu, X, Phone, ChevronDown, GraduationCap, Stethoscope, MapPin } from 'lucide-react'
+import { Menu, X, Phone, ChevronDown, GraduationCap, Stethoscope } from 'lucide-react'
 import Logo from '../../assets/logo1.png'
-import { services } from '../../data'
+
+// ── Hardcoded service links (no data.js dependency) ──────────────────────────
+const serviceLinks = [
+  { title: '24 Hours Home Nursing Services', to: '/nurse' },
+  { title: 'Nursing Services',               to: '/nursing' },
+  { title: 'Caretaking At Home',             to: '/caretaking' },
+  { title: 'Elder Home Care',                to: '/elder' },
+  { title: 'Mother & Baby Care',             to: '/motherbaby' },
+  { title: 'Specialized Care Services',      to: '/special' },
+  { title: 'Nurse Bureaus',                  to: '/bureaus' },
+  { title: 'Senior Citizen Care Taker Services', to: '/seniorcitizen' },
+  { title: 'Child Care',                     to: '/childcare' },
+  { title: 'Orthopedic Care',                to: '/ortho' },
+  { title: 'Corporate Health Services',      to: '/corporate-health' },
+  { title: 'Palliative Care',                to: '/palliative-care' },
+]
 
 const navLinks = [
-  { to: '/about', label: 'About Us' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/about',   label: 'About Us' },
+  { to: '/contact', label: 'Contact'  },
 ]
 
 const trainingLinks = [
@@ -24,21 +39,6 @@ const trainingLinks = [
   },
 ]
 
-const CITIES = ['Coimbatore', 'Chennai', 'Madurai', 'Trichy', 'Salem', 'Erode']
-
-async function persistCity(city) {
-  localStorage.setItem('selectedCity', city)
-  try {
-    await fetch('/api/user-city', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ city }),
-    })
-  } catch (err) {
-    console.warn('Failed to sync city to backend:', err)
-  }
-}
-
 // ── Small hook: true when viewport < 768px ───────────────────────────────────
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
@@ -52,20 +52,14 @@ function useIsMobile() {
 }
 
 export default function Navbar() {
-  const isMobile = useIsMobile()
-  const location = useLocation()
+  const isMobile  = useIsMobile()
+  const location  = useLocation()
 
-  const [menuOpen, setMenuOpen]         = useState(false)
-  const [scrolled, setScrolled]         = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
-  const [nursesOpen, setNursesOpen]     = useState(false)
-  const [trainingOpen, setTrainingOpen] = useState(false)
-  const [helpOpen, setHelpOpen]         = useState(false)
-  const [cityOpen, setCityOpen]         = useState(false)
-
-  const [selectedCity, setSelectedCity] = useState(
-    () => localStorage.getItem('selectedCity') || 'Coimbatore'
-  )
+  const [menuOpen,      setMenuOpen]      = useState(false)
+  const [scrolled,      setScrolled]      = useState(false)
+  const [servicesOpen,  setServicesOpen]  = useState(false)
+  const [nursesOpen,    setNursesOpen]    = useState(false)
+  const [trainingOpen,  setTrainingOpen]  = useState(false)
 
   const cityRef     = useRef(null)
   const servicesRef = useRef(null)
@@ -86,20 +80,12 @@ export default function Navbar() {
     setTrainingOpen(false)
   }, [location])
 
-  // ── Click-outside for city ───────────────────────────────────────────────
-  useEffect(() => {
-    const handler = (e) => {
-      if (cityRef.current && !cityRef.current.contains(e.target)) setCityOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
   // ── Click-outside for services ───────────────────────────────────────────
   useEffect(() => {
     if (!isMobile) return
     const handler = (e) => {
-      if (servicesRef.current && !servicesRef.current.contains(e.target)) setServicesOpen(false)
+      if (servicesRef.current && !servicesRef.current.contains(e.target))
+        setServicesOpen(false)
     }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
@@ -118,12 +104,6 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handler)
   }, [isMobile])
 
-  const handleCitySelect = (city) => {
-    setSelectedCity(city)
-    setCityOpen(false)
-    persistCity(city)
-  }
-
   // ── Hover handlers: hover on desktop, click on mobile ───────────────────
   const servicesHover = isMobile ? {} : {
     onMouseEnter: () => setServicesOpen(true),
@@ -133,14 +113,6 @@ export default function Navbar() {
     onMouseEnter: () => setNursesOpen(true),
     onMouseLeave: () => { setNursesOpen(false); setTrainingOpen(false) },
   }
-  const trainingHover = isMobile ? {} : {
-    onMouseEnter: () => setTrainingOpen(true),
-    onMouseLeave: () => setTrainingOpen(false),
-  }
-  const helpHover = isMobile ? {} : {
-    onMouseEnter: () => setHelpOpen(true),
-    onMouseLeave: () => setHelpOpen(false),
-  }
 
   return (
     <header
@@ -148,9 +120,6 @@ export default function Navbar() {
         scrolled ? 'bg-white shadow-md' : 'bg-white/95 backdrop-blur-sm'
       }`}
     >
-
-      
-
       {/* ── Main nav ─────────────────────────────────────────────────────── */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[60px]">
@@ -160,9 +129,10 @@ export default function Navbar() {
             <img src={Logo} alt="Instabookin Health Logo" className="h-10 w-auto object-contain" />
           </Link>
 
-          {/* Desktop nav links */}
+          {/* ── Desktop nav ──────────────────────────────────────────────── */}
           <div className="hidden md:flex items-center gap-1 h-full">
 
+            {/* Home */}
             <NavLink
               to="/"
               end
@@ -176,43 +146,46 @@ export default function Navbar() {
               <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300" />
             </NavLink>
 
-            {/* Services */}
+            {/* Services dropdown */}
             <div className="relative h-full flex items-center" {...servicesHover}>
-              <NavLink
-                to="/services"
-                className={({ isActive }) =>
-                  `group px-4 py-2 flex items-center gap-1 rounded-lg text-base font-medium leading-none relative transition-all duration-150 ${
-                    isActive ? 'text-[#2b314f]' : 'text-slate-800 hover:text-[#2b314f]'
-                  }`
-                }
+              <button
+                onClick={() => isMobile && setServicesOpen(!servicesOpen)}
+                className="group px-4 py-2 flex items-center gap-1 rounded-lg text-base font-medium leading-none relative transition-all duration-150 text-slate-800 hover:text-[#2b314f]"
               >
                 Services
-                <ChevronDown size={15} className={`transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={15}
+                  className={`transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`}
+                />
                 <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300" />
-              </NavLink>
+              </button>
 
               {servicesOpen && (
                 <div
                   className="absolute top-full left-0 mt-0 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50"
-                  style={{ width: services.length > 6 ? '512px' : '256px' }}
+                  style={{ width: '512px' }}
                 >
                   <div className="absolute -top-2 left-6 w-4 h-4 bg-white border-l border-t border-slate-100 rotate-45" />
-                  <div className="grid" style={{ gridTemplateColumns: services.length > 6 ? 'repeat(2, 1fr)' : '1fr' }}>
-                    {services.map((service) => (
+
+                  <div className="grid grid-cols-2">
+                    {serviceLinks.map((service) => (
                       <Link
-                        key={service.id}
-                        to={`/services/${service.slug}`}
+                        key={service.title}
+                        to={service.to}
                         className="flex items-center gap-3 px-4 py-2.5 hover:bg-orange-50 hover:text-orange-600 transition-colors duration-150 group"
                       >
-                        <span className="text-lg">{service.icon}</span>
                         <span className="text-sm font-medium text-slate-700 group-hover:text-orange-600 truncate">
                           {service.title}
                         </span>
                       </Link>
                     ))}
                   </div>
+
                   <div className="border-t border-slate-100 mt-2 pt-2 px-4">
-                    <Link to="/services" className="flex items-center gap-2 text-sm font-semibold text-orange-500 hover:text-orange-600">
+                    <Link
+                      to="/services"
+                      className="flex items-center gap-2 text-sm font-semibold text-orange-500 hover:text-orange-600"
+                    >
                       View All Services →
                     </Link>
                   </div>
@@ -231,10 +204,11 @@ export default function Navbar() {
                 }
               >
                 Nurses
-                 
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[2px] w-0 bg-orange-500 group-hover:w-[70%] transition-all duration-300" />
               </NavLink>
             </div>
 
+            {/* About Us & Contact */}
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -302,18 +276,20 @@ export default function Navbar() {
                 className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50"
               >
                 Services
-                <ChevronDown size={15} className={`transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={15}
+                  className={`transition-transform duration-200 ${servicesOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {servicesOpen && (
                 <div className="ml-4 mt-1 space-y-1 border-l-2 border-orange-200 pl-3">
-                  {services.map((service) => (
+                  {serviceLinks.map((service) => (
                     <Link
-                      key={service.id}
-                      to={`/services/${service.slug}`}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                      key={service.title}
+                      to={service.to}
+                      className="block px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                     >
-                      <span>{service.icon}</span>
-                      <span>{service.title}</span>
+                      {service.title}
                     </Link>
                   ))}
                   <Link to="/services" className="block px-3 py-2 text-sm font-semibold text-orange-500">
@@ -330,7 +306,10 @@ export default function Navbar() {
                 className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50"
               >
                 Nurses
-                <ChevronDown size={15} className={`transition-transform duration-200 ${nursesOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={15}
+                  className={`transition-transform duration-200 ${nursesOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {nursesOpen && (
                 <div className="ml-4 mt-1 space-y-1 border-l-2 border-orange-200 pl-3">
@@ -340,13 +319,15 @@ export default function Navbar() {
                   >
                     <span>👩‍⚕️</span><span>Join Us</span>
                   </Link>
-
                   <button
                     onClick={() => setTrainingOpen(!trainingOpen)}
                     className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm text-slate-600 hover:bg-slate-50"
                   >
                     <div className="flex items-center gap-2"><span>🎓</span><span>Training</span></div>
-                    <ChevronDown size={13} className={`transition-transform duration-200 ${trainingOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      size={13}
+                      className={`transition-transform duration-200 ${trainingOpen ? 'rotate-180' : ''}`}
+                    />
                   </button>
                   {trainingOpen && (
                     <div className="ml-4 space-y-1 border-l-2 border-orange-100 pl-3">
