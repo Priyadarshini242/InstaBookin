@@ -14,27 +14,30 @@ const nurseTypes = [
     iconBg: 'bg-blue-100',
     title: 'Registered nurses (RN)',
     desc: 'General and specialised care across hospitals, clinics, and homes',
+    image: '/images/registered-nurse.jpg',  // 👈 ADD THIS LINE
   },
   {
     icon: '🏥',
     iconBg: 'bg-red-100',
     title: 'ICU & critical care',
     desc: 'Trained professionals for high-dependency and intensive care settings',
+    image: '/images/icu-care.jpg',          // 👈 ADD THIS LINE
   },
   {
     icon: '👶',
     iconBg: 'bg-orange-100',
     title: 'Paediatric nurses',
     desc: 'Child-focused nursing care from newborns to adolescents',
+    image: '/images/paediatric-nurse.jpg',  // 👈 ADD THIS LINE
   },
   {
     icon: '🕊️',
     iconBg: 'bg-green-100',
     title: 'Palliative & elder care',
     desc: 'Compassionate end-of-life and long-term elderly support specialists',
+    image: '/images/elderly-care.jpg',        // 👈 ADD THIS LINE
   },
 ]
-
 const bureauSteps = [
   {
     num: 1,
@@ -64,31 +67,51 @@ const pills = [
   'Clinically assessed',
   'Continuously audited',
 ]
-
 function NurseTypeCard({ item }) {
   return (
-    <div
-      className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-3 overflow-hidden"
-      onMouseEnter={e => e.currentTarget.style.borderColor = '#1f9de0'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = ''}
-    >
+    <div className="relative rounded-2xl border border-slate-100 overflow-hidden h-56 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#1f9de0]">
+
+      {/* Top accent bar */}
       <div
-        className="absolute top-0 left-0 right-0 h-1 w-0 group-hover:w-full transition-all duration-500"
+        className="absolute top-0 left-0 right-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 z-[3]"
         style={{ background: 'linear-gradient(to right, #1f9de0, #0d7bb5)' }}
       />
-      <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
-        {item.icon}
+
+      {/* BG Image — hover la reveal aagum */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-0 scale-110 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 z-0"
+        style={{ backgroundImage: `url(${item.image})` }}
+      />
+
+      {/* Blue gradient overlay */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-300 transition-opacity duration-400 z-[1]"
+        style={{
+          background: 'linear-gradient(160deg, rgba(43, 54, 59, 0.7) 0%, rgba(60, 71, 80, 0.85) 100%)',
+        }}
+      />
+
+      {/* Default white bg */}
+      <div className="absolute inset-0 bg-white group-hover:opacity-0 transition-opacity duration-300 z-0" />
+
+      {/* Content */}
+      <div className="relative z-[2] p-5 h-full flex flex-col gap-3">
+        <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300`}>
+          {item.icon}
+        </div>
+        <div className="mt-auto">
+          <h3 className="font-bold text-slate-800 group-hover:text-white transition-colors duration-300 mb-1">
+            {item.title}
+          </h3>
+          <p className="text-slate-400 group-hover:text-white/80 text-sm leading-relaxed transition-colors duration-300">
+            {item.desc}
+          </p>
+        </div>
       </div>
-      <div>
-        <h3 className="font-bold text-slate-800 transition-colors duration-300 mb-1 group-hover:[color:#1f9de0]">
-          {item.title}
-        </h3>
-        <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-      </div>
+
     </div>
   )
 }
-
 function StepCard({ step }) {
   return (
     <div
@@ -141,7 +164,7 @@ export default function NurseBureaus() {
             </h2>
             <div className="h-1 w-16 rounded-full mb-6" style={{ backgroundColor: '#1f9de0' }} />
 
-            <div className="space-y-4 text-slate-500 text-[15px] leading-relaxed">
+            <div className="space-y-4 text-black text-[15px] leading-relaxed">
               <p>
                 At <span className="font-black text-slate-700">Instabookin</span>, our Nurse Bureau is the backbone of everything we do — a carefully curated network of credentialed, experienced nurses ready to serve patients, hospitals, clinics, and care facilities across the country.
               </p>

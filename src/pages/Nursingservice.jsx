@@ -1,30 +1,34 @@
 import PageHeader from '../components/common/PageHeader'
 import CTABanner from '../components/home/CTABanner'
 
-const services = [
+ const services = [
   {
     icon: '🩺',
     iconBg: 'bg-red-100',
     title: 'Post-surgical care',
     desc: 'Expert monitoring and wound management at home after procedures',
+    image: '/images/post-surgical.jpg',  // 👈 ADD THIS LINE
   },
   {
     icon: '💊',
     iconBg: 'bg-blue-100',
     title: 'Medication management',
     desc: 'Timely administration and dosage tracking by qualified nurses',
+    image: '/images/medication.jpg',     // 👈 ADD THIS LINE
   },
   {
     icon: '👴',
     iconBg: 'bg-orange-100',
     title: 'Elderly home care',
     desc: 'Compassionate daily support for senior patients and their families',
+    image: '/images/elderly-care.jpg',   // 👈 ADD THIS LINE
   },
   {
     icon: '💉',
     iconBg: 'bg-green-100',
     title: 'IV & wound therapy',
     desc: 'Safe, sterile procedures performed in your own environment',
+    image: '/images/iv-therapy.jpg',     // 👈 ADD THIS LINE
   },
 ]
 
@@ -60,22 +64,44 @@ const pills = [
 
 function ServiceCard({ service }) {
   return (
-    <div className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-3 overflow-hidden"
-      style={{ '--hover-border': '#1f9de0' }}
-      onMouseEnter={e => e.currentTarget.style.borderColor = '#1f9de0'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = ''}
-    >
-      <div className="absolute top-0 left-0 right-0 h-1 w-0 group-hover:w-full transition-all duration-500"
+    <div className="relative rounded-2xl border border-slate-100 overflow-hidden h-56 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#1f9de0]">
+      
+      {/* Top accent bar */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 z-[3]"
         style={{ background: 'linear-gradient(to right, #1f9de0, #0d7bb5)' }}
       />
-      <div className={`w-12 h-12 rounded-2xl ${service.iconBg} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
-        {service.icon}
-      </div>
-      <div>
-        <h3 className="font-bold text-slate-800 transition-colors duration-300 mb-1 group-hover:[color:#1f9de0]">
-          {service.title}
-        </h3>
-        <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
+
+      {/* BG Image — hover la reveal aagum */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-0 scale-110 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 z-0"
+        style={{ backgroundImage: `url(${service.image})` }}
+      />
+
+      {/* Blue gradient overlay */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-300 transition-opacity duration-400 z-[1]"
+        style={{
+          background: 'linear-gradient(160deg, rgba(73, 93, 105, 0.7) 0%, rgba(105, 115, 122, 0.85) 100%)',
+        }}
+      />
+
+      {/* Default white bg */}
+     {/* <div className="absolute inset-0 bg-white group-hover:opacity-0 transition-opacity duration-300 z-0" /> */}
+
+      {/* Content */}
+      <div className="relative z-[2] p-5 h-full flex flex-col gap-3">
+        <div className={`w-12 h-12 rounded-2xl ${service.iconBg} flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300`}>
+          {service.icon}
+        </div>
+        <div className="mt-auto">
+          <h3 className="font-bold text-slate-800 group-hover:text-white transition-colors duration-300 mb-1">
+            {service.title}
+          </h3>
+          <p className="text-slate-400 group-hover:text-white/90 text-sm leading-relaxed transition-colors duration-600">
+            {service.desc}
+          </p>
+        </div>
       </div>
     </div>
   )

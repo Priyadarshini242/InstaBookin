@@ -29,36 +29,42 @@ const coreServices = [
     iconBg: 'bg-blue-100',
     title: 'Newborn bathing & hygiene',
     desc: 'Safe, gentle bathing routines, umbilical cord care, skin care, and nappy changing support',
+    image: '/images/newborn-bathing.jpg',   // 👈 ADD THIS LINE
   },
   {
     icon: '🍼',
     iconBg: 'bg-sky-100',
     title: 'Feeding support & guidance',
     desc: 'Breastfeeding assistance, latch support, formula feeding, and newborn feeding schedule management',
+    image: '/images/feeding-support.jpg',   // 👈 ADD THIS LINE
   },
   {
     icon: '📊',
     iconBg: 'bg-indigo-100',
     title: 'Newborn health monitoring',
     desc: 'Weight tracking, jaundice checks, vital signs observation, and early developmental milestone assessment',
+    image: '/images/sleep-routine.jpg', // 👈 ADD THIS LINE
   },
   {
     icon: '🌙',
     iconBg: 'bg-blue-100',
     title: 'Sleep routine establishment',
     desc: 'Structured day-night sleep training and safe sleeping guidance for newborns and infants',
+    image: '/images/postpartum-care.jpg',     // 👈 ADD THIS LINE
   },
   {
     icon: '👩‍⚕️',
     iconBg: 'bg-sky-100',
     title: 'Post-partum mother care',
     desc: 'Maternal wound care, nutrition support, emotional well-being guidance, and C-section recovery assistance',
+    image: '/images/night-nursing.jpg',   // 👈 ADD THIS LINE
   },
   {
     icon: '🌟',
     iconBg: 'bg-indigo-100',
     title: 'Night nursing support',
     desc: 'Overnight baby care so new mothers can rest and recover — feeding, settling, and monitoring through the night',
+    image: '/images/nightnursing.jpg',     // 👈 ADD THIS LINE
   },
 ]
 
@@ -103,24 +109,48 @@ const steps = [
     desc: "Receive a detailed report after every visit covering the baby's health, feeding, sleep patterns, and mother's recovery",
   },
 ]
-
 function ServiceCard({ item }) {
   return (
-    <div className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:border-blue-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-3 overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-blue-600 w-0 group-hover:w-full transition-all duration-500" />
-      <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
-        {item.icon}
+    <div className="relative rounded-2xl border border-slate-100 overflow-hidden h-56 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-blue-400">
+
+      {/* Top accent bar */}
+      <div className="absolute top-0 left-0 right-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 z-[3] bg-gradient-to-r from-blue-400 to-blue-600" />
+
+      {/* BG Image — hover la reveal aagum */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-0 scale-110 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 z-0"
+        style={{ backgroundImage: `url(${item.image})` }}
+      />
+
+      {/* Blue gradient overlay */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-130 transition-opacity duration-400 z-[1]"
+        style={{
+          background: 'linear-gradient(160deg, rgba(48, 56, 66, 0.7) 0%, rgba(56, 64, 82, 0.85) 100%)',
+        }}
+      />
+
+      {/* Default white bg */}
+      <div className="absolute inset-0 bg-white group-hover:opacity-0 transition-opacity duration-300 z-0" />
+
+      {/* Content */}
+      <div className="relative z-[2] p-5 h-full flex flex-col gap-3">
+        <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300`}>
+          {item.icon}
+        </div>
+        <div className="mt-auto">
+          <h3 className="font-bold text-slate-800 group-hover:text-white transition-colors duration-300 mb-1">
+            {item.title}
+          </h3>
+          <p className="text-slate-400 group-hover:text-white/80 text-sm leading-relaxed transition-colors duration-300">
+            {item.desc}
+          </p>
+        </div>
       </div>
-      <div>
-        <h3 className="font-bold text-slate-800 group-hover:text-blue-600 transition-colors duration-300 mb-1">
-          {item.title}
-        </h3>
-        <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-      </div>
+
     </div>
   )
 }
-
 function WhyCard({ item }) {
   return (
     <div className="bg-white rounded-2xl p-5 border-l-4 border-blue-400 border border-slate-100 hover:shadow-lg transition-all duration-300 group flex flex-col gap-2">

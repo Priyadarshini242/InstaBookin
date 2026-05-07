@@ -88,7 +88,7 @@ export default function Hero() {
             <span className="text-[#f56f22]">At Your Doorstep</span>
           </h1>
 
-          <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-lg">
+          <p className="text-white/800 text-bold leading-relaxed mb-8 max-w-lg">
             Connect with certified doctors, nurses, and physiotherapists who come to your home. Book in minutes, get care in hours.
           </p>
 

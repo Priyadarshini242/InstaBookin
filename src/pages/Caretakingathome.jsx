@@ -21,42 +21,49 @@ const pills = [
   'Caretaker booking online',
 ]
 
+// ❌ EXISTING CODE (touch vendam, sirf image: line add pannu each object la):
 const coreServices = [
   {
     icon: '🩺',
     iconBg: 'bg-green-100',
     title: 'Post-surgical patient care',
     desc: 'Attentive recovery monitoring, wound care, and mobility assistance after surgical procedures at home',
+    image: '/images/post-surgical.jpg',   // 👈 ADD THIS LINE
   },
   {
     icon: '🫀',
     iconBg: 'bg-blue-100',
     title: 'Chronic illness home care',
     desc: 'Ongoing patient care at home for diabetes, hypertension, COPD, and other long-term conditions',
+    image: '/images/chronic-illness.jpg', // 👈 ADD THIS LINE
   },
   {
     icon: '🛁',
     iconBg: 'bg-orange-100',
     title: 'Personal hygiene assistance',
     desc: 'Dignified support with bathing, grooming, dressing, and daily personal hygiene for bedridden patients',
+    image: '/images/hygiene.jpg',         // 👈 ADD THIS LINE
   },
   {
     icon: '📊',
     iconBg: 'bg-red-100',
     title: 'Vital sign monitoring',
     desc: 'Regular blood pressure, pulse, temperature, and oxygen level tracking with digital health reporting',
+    image: '/images/vital-signs.jpg',     // 👈 ADD THIS LINE
   },
   {
     icon: '💊',
     iconBg: 'bg-purple-100',
     title: 'Medication supervision',
     desc: 'Timely reminders, dosage tracking, and safe medication administration as part of patient care at home',
+    image: '/images/medication.jpg',      // 👈 ADD THIS LINE
   },
   {
     icon: '🦽',
     iconBg: 'bg-teal-100',
     title: 'Rehabilitation support',
     desc: 'Physiotherapy assistance, exercises, and guided movement for patients recovering from injuries or strokes',
+    image: '/images/rehabilitation.jpg',  // 👈 ADD THIS LINE
   },
 ]
 
@@ -104,23 +111,46 @@ const steps = [
 
 function ServiceCard({ item }) {
   return (
-    <div
-      className="relative bg-white rounded-2xl p-5 border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col gap-3 overflow-hidden"
-      onMouseEnter={e => e.currentTarget.style.borderColor = '#1f9de0'}
-      onMouseLeave={e => e.currentTarget.style.borderColor = ''}
-    >
-      <div className="absolute top-0 left-0 right-0 h-1 w-0 group-hover:w-full transition-all duration-500"
+    <div className="relative rounded-2xl border border-slate-100 overflow-hidden h-56 cursor-pointer group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#1f9de0]">
+
+      {/* Top accent bar */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[3px] w-0 group-hover:w-full transition-all duration-500 z-[3]"
         style={{ background: 'linear-gradient(to right, #1f9de0, #0d7bb5)' }}
       />
-      <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 shadow-sm`}>
-        {item.icon}
+
+      {/* BG Image — hover la reveal aagum */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-0 scale-110 group-hover:opacity-100 group-hover:scale-100 transition-all duration-500 z-0"
+        style={{ backgroundImage: `url(${item.image})` }}
+      />
+
+      {/* Blue gradient overlay */}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-300 transition-opacity duration-400 z-[1]"
+        style={{
+          background: 'linear-gradient(160deg, rgba(53, 62, 66, 0.7) 0%, rgba(84, 95, 102, 0.85) 100%)',
+        }}
+      />
+
+      {/* Default white bg */}
+      <div className="absolute inset-0 bg-white group-hover:opacity-0 transition-opacity duration-300 z-0" />
+
+      {/* Content */}
+      <div className="relative z-[2] p-5 h-full flex flex-col gap-3">
+        <div className={`w-12 h-12 rounded-2xl ${item.iconBg} flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:bg-white/25 transition-all duration-300`}>
+          {item.icon}
+        </div>
+        <div className="mt-auto">
+          <h3 className="font-bold text-slate-800 group-hover:text-white transition-colors duration-300 mb-1">
+            {item.title}
+          </h3>
+          <p className="text-slate-400 group-hover:text-white/80 text-sm leading-relaxed transition-colors duration-300">
+            {item.desc}
+          </p>
+        </div>
       </div>
-      <div>
-        <h3 className="font-bold text-slate-800 transition-colors duration-300 mb-1 group-hover:[color:#1f9de0]">
-          {item.title}
-        </h3>
-        <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-      </div>
+
     </div>
   )
 }
